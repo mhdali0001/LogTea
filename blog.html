@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogTea | المدونة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" /><link rel="stylesheet" href="pages.css" />
+</head>
+<body data-page="blog" data-i18n-title="blog.title">
+<div id="nav-placeholder"></div>
+
+<!-- ===== PAGE BANNER ===== -->
+<section class="page-banner">
+  <div class="page-banner-grid"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html" data-i18n="bread.home">الرئيسية</a><span class="breadcrumb-sep">/</span><span data-i18n="blog.bread">المدونة</span></div>
+    <h1 data-i18n-html="blog.banner.title">رؤى تقنية <span class="text-teal">وتجارب حقيقية</span></h1>
+    <p data-i18n="blog.banner.desc">نشارك معرفتنا وخبراتنا في عالم التقنية — مقالات عملية تساعدك على اتخاذ قرارات تقنية أذكى</p>
+    <div class="page-banner-actions">
+      <a href="#featured" class="btn btn-primary" data-i18n="blog.banner.btn1">ابدأ القراءة</a>
+      <a href="#newsletter-sec" class="btn btn-ghost" data-i18n="blog.banner.btn2">اشترك في النشرة</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURED ARTICLE ===== -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="blog.feat.tag">المقال المميز</div>
+      <h2 class="section-title" data-i18n-html="blog.feat.title">أبرز <span class="text-teal">ما نشرناه</span></h2>
+    </div>
+    <div class="blog-featured" data-aos="fade-up">
+      <div class="bf-visual"><span>🧠</span></div>
+      <div class="bf-content">
+        <span class="bf-cat" data-i18n="blog.feat.cat">AI &amp; LLMs</span>
+        <h2 data-i18n="blog.feat.h">كيف تبني وكيلاً ذكياً (AI Agent) لأعمالك من الصفر؟</h2>
+        <p data-i18n="blog.feat.desc">دليل شامل وعملي لبناء AI Agent متخصص لأعمالك باستخدام LangChain وOpenAI، مع أمثلة كود حقيقية واستراتيجيات التعامل مع الحالات المعقدة وضمان الموثوقية في الإنتاج.</p>
+        <div class="bf-meta">
+          <span data-i18n="blog.feat.m1">📅 14 يونيو 2026</span>
+          <span data-i18n="blog.feat.m2">⏱ 12 دقيقة للقراءة</span>
+          <span data-i18n="blog.feat.m3">👁 4,280 مشاهدة</span>
+        </div>
+        <a href="#" class="btn btn-primary" data-i18n="blog.feat.btn">اقرأ المقال كاملاً</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATEGORIES + GRID ===== -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="blog.grid.tag">جميع المقالات</div>
+      <h2 class="section-title" data-i18n-html="blog.grid.title">تصفح حسب <span class="text-teal">الموضوع</span></h2>
+    </div>
+    <div class="blog-cats" data-aos="fade-up">
+      <button class="blog-cat-btn active">الكل</button>
+      <button class="blog-cat-btn">AI &amp; ML</button>
+      <button class="blog-cat-btn">Web Dev</button>
+      <button class="blog-cat-btn">Security</button>
+      <button class="blog-cat-btn">Cloud</button>
+      <button class="blog-cat-btn">Career</button>
+      <button class="blog-cat-btn">DevOps</button>
+    </div>
+
+    <div class="blog-page-grid">
+      <div class="blog-pg-card" data-aos="fade-up">
+        <div class="bpc-visual bv1"><span>🤖</span><span class="bpc-tag">AI</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b1.meta">10 يونيو 2026 · 8 دقائق</div>
+          <h3 data-i18n="blog.b1.title">مستقبل الذكاء الاصطناعي في تطوير البرمجيات</h3>
+          <p data-i18n="blog.b1.desc">كيف تُغيّر نماذج AI الضخمة طريقة كتابة الكود وتصميم الأنظمة؟ وما هو دور المطور في المستقبل؟</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">نق</div><span data-i18n="blog.b1.author">نورة القحطاني</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-pg-card" data-aos="fade-up" data-aos-delay="50">
+        <div class="bpc-visual bv2"><span>🛡️</span><span class="bpc-tag">Security</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b2.meta">5 يونيو 2026 · 10 دقائق</div>
+          <h3 data-i18n="blog.b2.title">OWASP Top 10: أخطر الثغرات الأمنية وكيف تحمي نفسك</h3>
+          <p data-i18n="blog.b2.desc">دليل عملي لفهم أخطر ثغرات الويب مع أمثلة كود حقيقية وطرق التصدي لكل منها</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">عغ</div><span data-i18n="blog.b2.author">علي الغامدي</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-pg-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="bpc-visual bv3"><span>☸️</span><span class="bpc-tag">Cloud</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b3.meta">1 يونيو 2026 · 7 دقائق</div>
+          <h3 data-i18n="blog.b3.title">Kubernetes في الإنتاج: أخطاء شائعة وكيف تتجنبها</h3>
+          <p data-i18n="blog.b3.desc">تجارب حقيقية من مشاريع ضخمة — الأخطاء التي يرتكبها الفرق عند نشر Kubernetes</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">مش</div><span data-i18n="blog.b3.author">محمد الشهري</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-pg-card" data-aos="fade-up">
+        <div class="bpc-visual bv4"><span>⚡</span><span class="bpc-tag">Web Dev</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b4.meta">25 مايو 2026 · 9 دقائق</div>
+          <h3 data-i18n="blog.b4.title">Next.js 15: كل ما تحتاج معرفته عن Server Actions و Caching</h3>
+          <p data-i18n="blog.b4.desc">دليل شامل للميزات الجديدة في Next.js 15 مع أمثلة عملية وأفضل الممارسات</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">رد</div><span data-i18n="blog.b4.author">ريم الدوسري</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-pg-card" data-aos="fade-up" data-aos-delay="50">
+        <div class="bpc-visual bv5"><span>🎯</span><span class="bpc-tag">Career</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b5.meta">20 مايو 2026 · 6 دقائق</div>
+          <h3 data-i18n="blog.b5.title">كيف تبني مساراً مهنياً في عالم التقنية عام 2026؟</h3>
+          <p data-i18n="blog.b5.desc">خريطة طريق عملية للمطورين الطامحين: المهارات الأكثر طلباً والأخطاء التي يجب تجنبها</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">مش</div><span data-i18n="blog.b5.author">محمد الشهري</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-pg-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="bpc-visual bv6"><span>🔧</span><span class="bpc-tag">DevOps</span></div>
+        <div class="bpc-body">
+          <div class="bpc-meta" data-i18n="blog.b6.meta">15 مايو 2026 · 11 دقائق</div>
+          <h3 data-i18n="blog.b6.title">CI/CD من الصفر: أتمتة نشرك مع GitHub Actions</h3>
+          <p data-i18n="blog.b6.desc">بناء Pipeline كامل من التطوير حتى الإنتاج مع اختبارات تلقائية ونشر آمن</p>
+          <div class="bpc-footer">
+            <div class="bpc-author"><div class="bpc-avatar">عغ</div><span data-i18n="blog.b6.author">علي الغامدي</span></div>
+            <a href="#" class="bpc-read">قراءة ←</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:40px;" data-aos="fade-up">
+      <a href="#" class="btn btn-ghost" data-i18n="blog.load">تحميل المزيد من المقالات</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="section" id="newsletter-sec">
+  <div class="container">
+    <div class="newsletter-box" data-aos="fade-up">
+      <div style="font-size:40px;margin-bottom:12px;">📬</div>
+      <h3 data-i18n="blog.nl.title">لا تفوت أي مقال جديد</h3>
+      <p data-i18n="blog.nl.desc">اشترك في نشرتنا البريدية الأسبوعية واحصل على أفضل المقالات التقنية مباشرة في صندوق الوارد</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" data-i18n-ph="blog.nl.ph" placeholder="بريدك الإلكتروني" />
+        <button type="submit" class="btn btn-primary" data-i18n="blog.nl.btn">اشترك الآن</button>
+      </form>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-secondary);" data-i18n="blog.nl.sub">✓ بدون سبام · ✓ إلغاء الاشتراك في أي وقت · ✓ أكثر من 2,000 مشترك</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TAGS ===== -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="blog.tags.tag">الوسوم</div>
+      <h2 class="section-title" data-i18n-html="blog.tags.title">تصفح <span class="text-teal">بالوسوم</span></h2>
+    </div>
+    <div class="tags-cloud" data-aos="fade-up">
+      <span class="tag-chip">Machine Learning</span><span class="tag-chip">React</span>
+      <span class="tag-chip">Python</span><span class="tag-chip">Security</span>
+      <span class="tag-chip">AWS</span><span class="tag-chip">Docker</span>
+      <span class="tag-chip">API Design</span><span class="tag-chip">TypeScript</span>
+      <span class="tag-chip">LangChain</span><span class="tag-chip">DevOps</span>
+      <span class="tag-chip">PostgreSQL</span><span class="tag-chip">Next.js</span>
+      <span class="tag-chip">Kubernetes</span><span class="tag-chip">OpenAI</span>
+      <span class="tag-chip">Career</span><span class="tag-chip">Performance</span>
+      <span class="tag-chip">Architecture</span><span class="tag-chip">Testing</span>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<a href="#" class="back-to-top" id="backToTop">↑</a>
+<script src="i18n.js"></script>
+<script src="components.js"></script>
+<script>
+  document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
