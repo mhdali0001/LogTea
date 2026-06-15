@@ -266,7 +266,8 @@
   border-radius:24px; padding:40px; display:flex; align-items:center; justify-content:center;
   min-height:340px; position:relative; overflow:hidden;
 }
-.sd-visual-icon { font-size:100px; filter:drop-shadow(0 0 30px rgba(36,193,167,.25)); animation:float 4s ease-in-out infinite; position:relative; z-index:1; }
+.sd-visual-icon { display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 0 40px rgba(36,193,167,.2)); animation:float 4s ease-in-out infinite; position:relative; z-index:1; }
+.sd-visual-icon svg { width:130px; height:130px; }
 .sd-visual::before {
   content:''; position:absolute; inset:0;
   background:radial-gradient(circle at 50% 50%, rgba(36,193,167,.06) 0%, transparent 65%);
@@ -348,10 +349,7 @@
 .pv7::before { background:linear-gradient(135deg,#1a0d2d,#2a1040); }
 .pv8::before { background:linear-gradient(135deg,#0d3d2a,#0a5220); }
 .port-visual span { position:relative; z-index:1; filter:drop-shadow(0 4px 16px rgba(0,0,0,.5)); }
-.port-cat-badge {
-  position:absolute; top:14px; right:14px; z-index:1;
-  font-size:10px; font-weight:700; padding:4px 10px; border-radius:100px; font-family:var(--font-en);
-}
+.port-cat-badge { display:none; }
 .port-card-body { padding:24px; flex:1; display:flex; flex-direction:column; }
 .port-tags { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
 .port-card h3 { font-size:16px; font-weight:700; color:#fff; margin-bottom:8px; }
@@ -395,14 +393,39 @@
 .cs-stat strong { display:block; font-size:28px; font-weight:800; color:var(--teal); font-family:var(--font-en); }
 .cs-stat span { font-size:12px; color:var(--text-secondary); }
 
+/* Portfolio — real client logo cards */
+.pv-photo::before { display: none; }
+.port-visual-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+}
+
+/* CNN / AI card custom visual */
+.pv-cnn::before { background: linear-gradient(135deg, #050a14, #0a1528); }
+.pv-svg-icon { width:100%; height:100%; position:relative; z-index:1; }
+
+/* Spotlight image */
+.cs-visual-img {
+  max-width: 58%; max-height: 60%;
+  object-fit: contain; position: relative; z-index: 2;
+  filter: drop-shadow(0 8px 32px rgba(0,0,0,.45));
+}
+
 /* Clients */
-.clients-grid { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+.clients-grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
 .client-logo {
   background:rgba(13,42,82,.7); border:1px solid var(--border); border-radius:12px;
-  padding:16px 28px; font-family:var(--font-en); font-size:14px; font-weight:600;
-  color:var(--text-secondary); transition:var(--transition);
+  padding:12px 20px; transition:var(--transition);
+  display:flex; align-items:center; justify-content:center;
 }
-.client-logo:hover { border-color:rgba(36,193,167,.4); color:var(--teal); }
+.client-logo:hover { border-color:rgba(36,193,167,.4); }
+.client-logo-img {
+  height:48px; width:auto; max-width:130px;
+  object-fit: contain; display:block;
+  filter: grayscale(0.3) brightness(1.1); opacity:0.85; transition:var(--transition);
+}
+.client-logo:hover .client-logo-img { filter:none; opacity:1; }
 
 /* ─────────────────────────────────────────────────────────── */
 /*  BLOG PAGE                                                  */
@@ -680,6 +703,6 @@
 
   /* ── Services ── */
   .sd-visual { min-height:200px; padding:28px; }
-  .sd-visual-icon { font-size:72px; }
+  .sd-visual-icon svg { width:90px; height:90px; }
   .service-detail { padding:36px 0; }
 }

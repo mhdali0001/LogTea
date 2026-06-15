@@ -34,20 +34,22 @@
       <h2 class="section-title" data-i18n-html="port.spot.title">مشروع <span class="text-teal">يستحق التسليط</span></h2>
     </div>
     <div class="case-spotlight" data-aos="fade-up">
-      <div class="cs-visual"><span>🏦</span></div>
+      <div class="cs-visual">
+        <img src="image/myedutable.png" alt="MyEduTable" class="cs-visual-img" />
+      </div>
       <div class="cs-content">
-        <span class="cs-label" data-i18n="port.spot.label">FinTech · AI · Security</span>
-        <h2 data-i18n="port.spot.cs">منصة إدارة الثروات الذكية</h2>
-        <p data-i18n="port.spot.desc">بنينا منصة شاملة لإدارة الثروات والاستثمارات مع نظام توصية مدعوم بالذكاء الاصطناعي. المنصة تحلل السلوك المالي للمستخدم وتقترح استراتيجيات استثمارية مخصصة في الوقت الفعلي.</p>
+        <span class="cs-label" data-i18n="port.spot.label">EdTech · SaaS · Global</span>
+        <h2 data-i18n="port.spot.cs">منصة إدارة الجداول الدراسية — MyEduTable</h2>
+        <p data-i18n="port.spot.desc">منصة SaaS عالمية تُمكّن المدارس والجامعات حول العالم من بناء جداولها الدراسية وإدارتها بكفاءة عالية. خوارزميات ذكية تلغي التعارضات تلقائياً وتُقلّص وقت التخطيط بنسبة 70%.</p>
         <div class="cs-stats">
-          <div class="cs-stat"><strong>2.3M</strong><span data-i18n="port.spot.s1">مستخدم فعّال</span></div>
-          <div class="cs-stat"><strong>↑89%</strong><span data-i18n="port.spot.s2">دقة التوصيات</span></div>
-          <div class="cs-stat"><strong>0.2s</strong><span data-i18n="port.spot.s3">وقت الاستجابة</span></div>
+          <div class="cs-stat"><strong>100+</strong><span data-i18n="port.spot.s1">مدرسة مشتركة</span></div>
+          <div class="cs-stat"><strong>3</strong><span data-i18n="port.spot.s2">لغات مدعومة</span></div>
+          <div class="cs-stat"><strong>🌍</strong><span data-i18n="port.spot.s3">متاح عالمياً</span></div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
-          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">Next.js</span>
-          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">Python / FastAPI</span>
-          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">TensorFlow</span>
+          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">Vue.js</span>
+          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">Python / Django</span>
+          <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">PostgreSQL</span>
           <span style="font-size:11px;font-family:var(--font-en);background:rgba(36,193,167,.12);border:1px solid rgba(36,193,167,.3);color:var(--teal);padding:4px 12px;border-radius:100px;">AWS</span>
         </div>
         <a href="contact.html" class="btn btn-primary" data-i18n="port.spot.btn">أريد مشروعاً مشابهاً</a>
@@ -65,77 +67,251 @@
     </div>
     <div class="portfolio-filters" data-aos="fade-up">
       <button class="pf-btn active" data-filter="all" data-i18n="port.f.all">الكل</button>
-      <button class="pf-btn" data-filter="web">Web Dev</button>
-      <button class="pf-btn" data-filter="ai">AI / ML</button>
-      <button class="pf-btn" data-filter="security">Security</button>
-      <button class="pf-btn" data-filter="cloud">Cloud</button>
-      <button class="pf-btn" data-filter="api">APIs</button>
+      <button class="pf-btn" data-filter="web" data-i18n="port.f.web">تطوير الويب</button>
+      <button class="pf-btn" data-filter="ecommerce" data-i18n="port.f.ecommerce">التجارة الإلكترونية</button>
+      <button class="pf-btn" data-filter="management" data-i18n="port.f.management">أنظمة الإدارة</button>
+      <button class="pf-btn" data-filter="saas" data-i18n="port.f.saas">منصات SaaS</button>
+      <button class="pf-btn" data-filter="ai" data-i18n="port.f.ai">الذكاء الاصطناعي</button>
     </div>
     <div class="port-grid">
-      <div class="port-card" data-category="ai web" data-aos="fade-up">
-        <div class="port-visual pv1"><span>🤖</span><span class="port-cat-badge" style="background:rgba(36,193,167,.15);border:1px solid rgba(36,193,167,.3);color:var(--teal);">AI + Web</span></div>
+
+      <!-- 1. مسالك النور -->
+      <div class="port-card" data-category="management web" data-aos="fade-up">
+        <div class="port-visual pv-photo">
+          <img src="image/masalek.jpg" alt="مسالك النور" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(36,193,167,.18);border:1px solid rgba(36,193,167,.4);color:var(--teal);">نظام إدارة</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p1.title">منصة إدارة الأعمال الذكية</h3>
-          <p data-i18n="port.p1.desc">نظام ERP ذكي بتحليلات AI آنية، لوحات معلومات تفاعلية وتقارير ذكية تساعد على اتخاذ القرار</p>
-          <div class="port-card-footer"><span class="port-result">↑ 45% كفاءة تشغيلية</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p1.title">نظام إدارة جمعية مسالك النور الخيرية</h3>
+          <p data-i18n="port.p1.desc">منصة رقمية متكاملة لإدارة عمليات الجمعية الخيرية، تشمل إدارة المستفيدين والمتبرعين وتتبع الحملات والتقارير المالية</p>
+          <div class="port-card-footer">
+            <span class="port-result">↑ 60% كفاءة إدارية</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Laravel</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Vue.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">MySQL</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="security" data-aos="fade-up" data-aos-delay="50">
-        <div class="port-visual pv2"><span>🛡️</span><span class="port-cat-badge" style="background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);color:#a855f7;">Security</span></div>
+
+      <!-- 2. خولة بنت الأزور -->
+      <div class="port-card" data-category="management web" data-aos="fade-up" data-aos-delay="50">
+        <div class="port-visual pv-photo">
+          <img src="image/khula.jpg" alt="خولة بنت الأزور" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(61,183,233,.18);border:1px solid rgba(61,183,233,.4);color:var(--blue);">نظام إدارة</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p2.title">تدقيق أمني لبنك رقمي</h3>
-          <p data-i18n="port.p2.desc">اختبار اختراق شامل وتقييم أمني لمنصة بنكية تخدم 500K+ مستخدم. اكتشفنا وأغلقنا 47 ثغرة</p>
-          <div class="port-card-footer"><span class="port-result">47 ثغرة مُعالجة</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p2.title">نظام إدارة الحصص المدرسية — خولة بنت الأزور</h3>
+          <p data-i18n="port.p2.desc">نظام ذكي لإدارة الجداول الدراسية والحصص، مع لوحة تحكم للمعلمين والإدارة ومتابعة الحضور والغياب</p>
+          <div class="port-card-footer">
+            <span class="port-result">↓ 70% وقت إعداد الجداول</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(61,183,233,.1);border:1px solid rgba(61,183,233,.2);color:var(--blue);padding:2px 8px;border-radius:100px;">React</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(61,183,233,.1);border:1px solid rgba(61,183,233,.2);color:var(--blue);padding:2px 8px;border-radius:100px;">Node.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(61,183,233,.1);border:1px solid rgba(61,183,233,.2);color:var(--blue);padding:2px 8px;border-radius:100px;">PostgreSQL</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="cloud" data-aos="fade-up" data-aos-delay="100">
-        <div class="port-visual pv3"><span>☁️</span><span class="port-cat-badge" style="background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24;">Cloud</span></div>
+
+      <!-- 3. لافا للهدايا -->
+      <div class="port-card" data-category="ecommerce web" data-aos="fade-up" data-aos-delay="100">
+        <div class="port-visual pv-photo">
+          <img src="image/lava.png" alt="لافا للعطور والهدايا" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.4);color:#ef4444;">تجارة إلكترونية</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p3.title">ترحيل سحابي لشركة لوجستية</h3>
-          <p data-i18n="port.p3.desc">ترحيل كامل لـ 30+ خادم إلى AWS مع تقليل التكاليف 40% وتحسين الأداء بشكل كبير</p>
-          <div class="port-card-footer"><span class="port-result">↓ 40% تكاليف البنية</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p3.title">متجر إلكتروني — لافا للعطور والهدايا</h3>
+          <p data-i18n="port.p3.desc">منصة تجارة إلكترونية متكاملة لبيع العطور والهدايا الفاخرة، مع نظام إدارة مخزون وطلبات وتجربة تسوق مميزة</p>
+          <div class="port-card-footer">
+            <span class="port-result">↑ 120% مبيعات إلكترونية</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:2px 8px;border-radius:100px;">Next.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:2px 8px;border-radius:100px;">Stripe</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:2px 8px;border-radius:100px;">MongoDB</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="ai" data-aos="fade-up" data-aos-delay="150">
-        <div class="port-visual pv4"><span>🎓</span><span class="port-cat-badge" style="background:rgba(36,193,167,.15);border:1px solid rgba(36,193,167,.3);color:var(--teal);">AI</span></div>
+
+      <!-- 4. Aromenza -->
+      <div class="port-card" data-category="ecommerce web" data-aos="fade-up" data-aos-delay="150">
+        <div class="port-visual pv-photo">
+          <img src="image/aromenza.jpeg" alt="Aromenza" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(251,191,36,.18);border:1px solid rgba(251,191,36,.4);color:#fbbf24;">تجارة إلكترونية</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p4.title">نظام توصية لمنصة تعليمية</h3>
-          <p data-i18n="port.p4.desc">خوارزمية توصية محتوى مخصصة تحلل سلوك 50K+ متعلم وتقترح مسارات تعليمية مثلى</p>
-          <div class="port-card-footer"><span class="port-result">↑ 45% تفاعل المتعلمين</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p4.title">منصة تجارة إلكترونية فاخرة — Aromenza</h3>
+          <p data-i18n="port.p4.desc">منصة احترافية لعلامة Aromenza للعطور الفاخرة بتصميم راقٍ يعكس هوية العلامة التجارية مع تجربة مستخدم استثنائية</p>
+          <div class="port-card-footer">
+            <span class="port-result">↑ 85% معدل التحويل</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;padding:2px 8px;border-radius:100px;">Next.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;padding:2px 8px;border-radius:100px;">Shopify API</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;padding:2px 8px;border-radius:100px;">AWS</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="web" data-aos="fade-up" data-aos-delay="200">
-        <div class="port-visual pv5"><span>🛒</span><span class="port-cat-badge" style="background:rgba(61,183,233,.15);border:1px solid rgba(61,183,233,.3);color:var(--blue);">Web</span></div>
+
+      <!-- 5. Denteam Clinic -->
+      <div class="port-card" data-category="management web" data-aos="fade-up" data-aos-delay="200">
+        <div class="port-visual pv-photo">
+          <img src="image/Dentam.png" alt="Denteam Clinic" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.4);color:#a855f7;">نظام إدارة</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p5.title">منصة تجارة إلكترونية متكاملة</h3>
-          <p data-i18n="port.p5.desc">متجر إلكتروني متكامل مع نظام مخزون ذكي، دفع آمن متعدد البوابات، وتطبيق موبايل</p>
-          <div class="port-card-footer"><span class="port-result">5M+ معاملة سنوياً</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p5.title">نظام إدارة عيادة الأسنان — Denteam Clinic</h3>
+          <p data-i18n="port.p5.desc">نظام إدارة متكامل لعيادة الأسنان يشمل حجز المواعيد الإلكتروني وملفات المرضى والفواتير ومتابعة خطط العلاج</p>
+          <div class="port-card-footer">
+            <span class="port-result">↑ 40% رضا المرضى</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">React</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">Laravel</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">MySQL</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="api cloud" data-aos="fade-up" data-aos-delay="250">
-        <div class="port-visual pv6"><span>🔌</span><span class="port-cat-badge" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444;">API</span></div>
+
+      <!-- 6. MyEduTable -->
+      <div class="port-card" data-category="saas web" data-aos="fade-up" data-aos-delay="250">
+        <div class="port-visual pv-photo">
+          <img src="image/myedutable.png" alt="MyEduTable" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(36,193,167,.18);border:1px solid rgba(36,193,167,.4);color:var(--teal);">SaaS</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p6.title">بوابة API للخدمات الحكومية</h3>
-          <p data-i18n="port.p6.desc">تصميم وبناء Gateway موحدة لربط 15+ خدمة حكومية مع Rate Limiting وتوثيق شامل</p>
-          <div class="port-card-footer"><span class="port-result">99.99% Uptime</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p6.title">منصة إدارة الجداول الدراسية — MyEduTable</h3>
+          <p data-i18n="port.p6.desc">منصة SaaS عالمية لإدارة الجداول الدراسية للمدارس والجامعات، مع خوارزميات ذكية لتوزيع الحصص ودعم متعدد اللغات</p>
+          <div class="port-card-footer">
+            <span class="port-result">100+ مدرسة مشتركة</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Vue.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Python</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">AWS</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="ai security" data-aos="fade-up" data-aos-delay="300">
-        <div class="port-visual pv7"><span>🔍</span><span class="port-cat-badge" style="background:rgba(36,193,167,.15);border:1px solid rgba(36,193,167,.3);color:var(--teal);">AI + Security</span></div>
+
+      <!-- 7. دليل الأطباء السوريين -->
+      <div class="port-card" data-category="management web" data-aos="fade-up" data-aos-delay="300">
+        <div class="port-visual pv-photo">
+          <img src="image/sydr.png" alt="دليل الأطباء السوريين" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.4);color:#22c55e;">تطبيق طبي</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p7.title">نظام كشف الاحتيال بالذكاء الاصطناعي</h3>
-          <p data-i18n="port.p7.desc">نظام AI يكشف المعاملات الاحتيالية في الوقت الفعلي بدقة 96% لشركة دفع إلكتروني</p>
-          <div class="port-card-footer"><span class="port-result">96% دقة الكشف</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p7.title">تطبيق دليل الأطباء السوريين — SYDR</h3>
+          <p data-i18n="port.p7.desc">تطبيق موبايل وموقع ويب لدليل الأطباء السوريين يُتيح للمرضى البحث بحسب التخصص والموقع والتقييم وحجز المواعيد إلكترونياً</p>
+          <div class="port-card-footer">
+            <span class="port-result">500+ طبيب مسجل</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e;padding:2px 8px;border-radius:100px;">React Native</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e;padding:2px 8px;border-radius:100px;">Node.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e;padding:2px 8px;border-radius:100px;">MongoDB</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="port-card" data-category="web ai" data-aos="fade-up" data-aos-delay="350">
-        <div class="port-visual pv8"><span>🏥</span><span class="port-cat-badge" style="background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e;">HealthTech</span></div>
+
+      <!-- 8. CNN Face Recognition -->
+      <div class="port-card" data-category="ai" data-aos="fade-up" data-aos-delay="350">
+        <div class="port-visual pv-cnn">
+          <svg class="pv-svg-icon" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- background grid -->
+            <defs>
+              <pattern id="fgrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(36,193,167,0.07)" stroke-width="0.6"/>
+              </pattern>
+            </defs>
+            <rect width="240" height="180" fill="url(#fgrid)"/>
+            <!-- detection bounding box corners -->
+            <path d="M52 24 L52 40 M52 24 L68 24" stroke="#24C1A7" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M188 24 L188 40 M188 24 L172 24" stroke="#24C1A7" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M52 156 L52 140 M52 156 L68 156" stroke="#24C1A7" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M188 156 L188 140 M188 156 L172 156" stroke="#24C1A7" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- face oval -->
+            <ellipse cx="120" cy="88" rx="46" ry="56" stroke="rgba(36,193,167,0.45)" stroke-width="1.5" fill="rgba(36,193,167,0.04)"/>
+            <!-- left eye -->
+            <circle cx="101" cy="76" r="6.5" fill="rgba(36,193,167,0.15)" stroke="#24C1A7" stroke-width="1.5"/>
+            <circle cx="101" cy="76" r="2.5" fill="#24C1A7"/>
+            <circle cx="102.5" cy="74.5" r="1" fill="rgba(255,255,255,0.5)"/>
+            <!-- right eye -->
+            <circle cx="139" cy="76" r="6.5" fill="rgba(36,193,167,0.15)" stroke="#24C1A7" stroke-width="1.5"/>
+            <circle cx="139" cy="76" r="2.5" fill="#24C1A7"/>
+            <circle cx="140.5" cy="74.5" r="1" fill="rgba(255,255,255,0.5)"/>
+            <!-- nose bridge -->
+            <circle cx="120" cy="94" r="3" fill="rgba(61,183,233,0.7)"/>
+            <!-- mouth landmarks -->
+            <circle cx="107" cy="110" r="2.5" fill="rgba(61,183,233,0.6)"/>
+            <circle cx="120" cy="114" r="2.5" fill="rgba(61,183,233,0.6)"/>
+            <circle cx="133" cy="110" r="2.5" fill="rgba(61,183,233,0.6)"/>
+            <!-- jawline dots -->
+            <circle cx="80" cy="106" r="1.8" fill="rgba(36,193,167,0.4)"/>
+            <circle cx="160" cy="106" r="1.8" fill="rgba(36,193,167,0.4)"/>
+            <circle cx="74" cy="88" r="1.8" fill="rgba(36,193,167,0.35)"/>
+            <circle cx="166" cy="88" r="1.8" fill="rgba(36,193,167,0.35)"/>
+            <!-- scan line -->
+            <line x1="52" y1="88" x2="188" y2="88" stroke="rgba(36,193,167,0.25)" stroke-width="1" stroke-dasharray="5 4"/>
+            <!-- left neural dots -->
+            <circle cx="18" cy="56" r="4" fill="rgba(36,193,167,0.5)"/>
+            <circle cx="18" cy="80" r="4" fill="rgba(36,193,167,0.5)"/>
+            <circle cx="18" cy="104" r="4" fill="rgba(36,193,167,0.5)"/>
+            <circle cx="18" cy="128" r="4" fill="rgba(36,193,167,0.4)"/>
+            <line x1="22" y1="56" x2="48" y2="76" stroke="rgba(36,193,167,0.2)" stroke-width="1"/>
+            <line x1="22" y1="80" x2="48" y2="88" stroke="rgba(36,193,167,0.2)" stroke-width="1"/>
+            <line x1="22" y1="104" x2="48" y2="96" stroke="rgba(36,193,167,0.2)" stroke-width="1"/>
+            <line x1="22" y1="128" x2="52" y2="120" stroke="rgba(36,193,167,0.15)" stroke-width="1"/>
+            <!-- right neural dots -->
+            <circle cx="222" cy="56" r="4" fill="rgba(61,183,233,0.5)"/>
+            <circle cx="222" cy="80" r="4" fill="rgba(61,183,233,0.5)"/>
+            <circle cx="222" cy="104" r="4" fill="rgba(61,183,233,0.5)"/>
+            <circle cx="222" cy="128" r="4" fill="rgba(61,183,233,0.4)"/>
+            <line x1="218" y1="56" x2="192" y2="76" stroke="rgba(61,183,233,0.2)" stroke-width="1"/>
+            <line x1="218" y1="80" x2="192" y2="88" stroke="rgba(61,183,233,0.2)" stroke-width="1"/>
+            <line x1="218" y1="104" x2="192" y2="96" stroke="rgba(61,183,233,0.2)" stroke-width="1"/>
+            <line x1="218" y1="128" x2="188" y2="120" stroke="rgba(61,183,233,0.15)" stroke-width="1"/>
+            <!-- confidence label -->
+            <rect x="76" y="162" width="88" height="14" rx="7" fill="rgba(36,193,167,0.12)" stroke="rgba(36,193,167,0.35)" stroke-width="1"/>
+            <text x="120" y="173" text-anchor="middle" fill="#24C1A7" font-size="8.5" font-family="monospace" letter-spacing="0.5">97.4% MATCH</text>
+          </svg>
+          <span class="port-cat-badge" style="background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.4);color:#a855f7;">AI · CNN</span>
+        </div>
         <div class="port-card-body">
-          <h3 data-i18n="port.p8.title">منصة تطبيب عن بُعد</h3>
-          <p data-i18n="port.p8.desc">منصة طبية متكاملة تربط المرضى بالأطباء مع دعم الفيديو والذكاء الاصطناعي في التشخيص الأولي</p>
-          <div class="port-card-footer"><span class="port-result">10K+ استشارة شهرياً</span><a href="#" class="port-link">التفاصيل ←</a></div>
+          <h3 data-i18n="port.p8.title">نموذج التعرف على الوجه باستخدام CNN</h3>
+          <p data-i18n="port.p8.desc">تدريب نموذج شبكة عصبية تلافيفية مخصص للتعرف على الوجوه بدقة عالية، مع معالجة بيانات التدريب والـ Data Augmentation وضبط المعاملات</p>
+          <div class="port-card-footer">
+            <span class="port-result">97%+ دقة التعرف</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">Python</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">TensorFlow</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;padding:2px 8px;border-radius:100px;">OpenCV</span>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- 9. Etta Systems -->
+      <div class="port-card" data-category="web" data-aos="fade-up" data-aos-delay="400">
+        <div class="port-visual pv-photo">
+          <img src="image/etta.png" alt="Etta Systems" class="port-visual-img" />
+          <span class="port-cat-badge" style="background:rgba(36,193,167,.18);border:1px solid rgba(36,193,167,.4);color:var(--teal);">موقع شركة</span>
+        </div>
+        <div class="port-card-body">
+          <h3 data-i18n="port.p9.title">الموقع الإلكتروني — Etta Systems</h3>
+          <p data-i18n="port.p9.desc">موقع إلكتروني احترافي لشركة Etta Systems التقنية بتصميم عصري يعكس هوية العلامة التجارية مع أداء عالٍ وتجربة مستخدم سلسة</p>
+          <div class="port-card-footer">
+            <span class="port-result">↑ 200% حضور رقمي</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Next.js</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Tailwind CSS</span>
+              <span style="font-size:10px;font-family:var(--font-en);background:rgba(36,193,167,.1);border:1px solid rgba(36,193,167,.2);color:var(--teal);padding:2px 8px;border-radius:100px;">Vercel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -149,10 +325,14 @@
       <p class="section-desc" data-i18n="port.clients.desc">من الناشئات إلى كبرى المؤسسات — نخدم جميع الأحجام والقطاعات</p>
     </div>
     <div class="clients-grid" data-aos="fade-up">
-      <div class="client-logo">TechStart Arabia</div><div class="client-logo">Fintech Arabia</div>
-      <div class="client-logo">LogiCo Group</div><div class="client-logo">EduPlatform SA</div>
-      <div class="client-logo">HealthConnect</div><div class="client-logo">Gulf Commerce</div>
-      <div class="client-logo">SmartGov Solutions</div><div class="client-logo">RetailMax</div>
+      <div class="client-logo"><img src="image/masalek.jpg" alt="مسالك النور" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/khula.jpg" alt="خولة بنت الأزور" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/lava.png" alt="لافا للعطور والهدايا" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/aromenza.jpeg" alt="Aromenza" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/Dentam.png" alt="Denteam Clinic" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/myedutable.png" alt="MyEduTable" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/sydr.png" alt="SYDR" class="client-logo-img" /></div>
+      <div class="client-logo"><img src="image/etta.png" alt="Etta Systems" class="client-logo-img" /></div>
     </div>
   </div>
 </section>
