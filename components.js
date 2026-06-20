@@ -85,11 +85,10 @@ const FOOTER = `
       </div>
     </div>
     <div class="footer-bottom">
-      <p data-i18n="footer.copy">© 2026 LogTea. جميع الحقوق محفوظة.</p>
+      <p>© 2024 LogTea Software Solutions. جميع الحقوق محفوظة.</p>
       <div class="footer-bottom-links">
-        <a href="#" data-i18n="footer.privacy">سياسة الخصوصية</a>
-        <a href="#" data-i18n="footer.terms">الشروط والأحكام</a>
-        <a href="contact.html" data-i18n="footer.support">الدعم الفني</a>
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">الشروط والأحكام</a>
       </div>
     </div>
   </div>
