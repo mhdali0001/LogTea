@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Pretty tool URLs: /tools/merge-pdf -> tool.php?slug=merge-pdf
+RewriteRule ^tools/([a-z0-9-]+)/?$ tool.php?slug=$1 [L,QSA]
+
+# Best-effort upload limits (ignored if the host disallows per-directory overrides).
+<IfModule mod_php.c>
+  php_value upload_max_filesize 50M
+  php_value post_max_size 55M
+  php_value max_execution_time 120
+</IfModule>
+
+Options -Indexes
