@@ -104,23 +104,6 @@ final class ToolRegistry
                 'class' => Tools\AddPasswordTool::class,
             ],
 
-            'remove-password-pdf' => [
-                'category'  => 'pdf',
-                'icon'      => 'unlock',
-                'name_ar'   => 'إزالة كلمة مرور PDF',
-                'name_en'   => 'Remove Password from PDF',
-                'desc_ar'   => 'أدخل كلمة المرور الحالية لإزالة الحماية من الملف',
-                'desc_en'   => 'Enter the current password to remove the protection',
-                'accept'    => ['pdf'],
-                'multiple'  => false,
-                'note_ar'   => 'يدعم حالياً ملفات PDF المشفّرة بمعيار RC4 القياسي (40/128-bit) فقط. ملفات AES-256 الحديثة (Acrobat DC وما بعده) غير مدعومة بعد.',
-                'note_en'   => 'Currently supports PDFs encrypted with the classic RC4 (40/128-bit) standard only. Modern AES-256 encryption (Acrobat DC+) is not supported yet.',
-                'options'   => [
-                    ['name' => 'password', 'type' => 'password', 'label_ar' => 'كلمة المرور الحالية', 'label_en' => 'Current password', 'required' => true],
-                ],
-                'class' => Tools\RemovePasswordTool::class,
-            ],
-
             'compress-pdf' => [
                 'category'  => 'pdf',
                 'icon'      => 'compress',

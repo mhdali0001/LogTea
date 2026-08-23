@@ -39,6 +39,25 @@ function initBackToTop() {
   });
 }
 
+function initHeroParticles() {
+  const wrap = document.querySelector('.hero-bg .particles');
+  if (!wrap) return;
+  const count = window.innerWidth < 760 ? 12 : 24;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span');
+    p.className = 'particle';
+    const size = 2 + Math.random() * 3;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.opacity = (0.2 + Math.random() * 0.4).toFixed(2);
+    p.style.animationDuration = (6 + Math.random() * 6).toFixed(1) + 's';
+    p.style.animationDelay = (Math.random() * 6).toFixed(1) + 's';
+    wrap.appendChild(p);
+  }
+}
+
 function initFAQ() {
   document.querySelectorAll('.faq-item').forEach((item) => {
     const btn = item.querySelector('.faq-question');
@@ -289,6 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initHamburger();
   initBackToTop();
+  initHeroParticles();
   initFAQ();
   initCategoryTabs();
   initToolSearch();

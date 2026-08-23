@@ -3,6 +3,7 @@
 require __DIR__ . '/../src/bootstrap.php';
 
 use LogTea\Support\Icons;
+use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
@@ -10,6 +11,7 @@ TempCleanup::run();
 $pageTitle = 'عن المنصة | LogTea';
 $pageDescription = 'LogTea منصة أدوات مجانية لمعالجة ملفات PDF والصور والمستندات، بدون تسجيل وبخصوصية كاملة.';
 $activePage = 'about';
+$canonicalPath = '/about.php';
 
 ob_start();
 ?>
@@ -50,10 +52,20 @@ ob_start();
 <section class="cta-banner">
   <div class="container">
     <h2>جرّب أدواتنا <span class="text-teal">الآن</span></h2>
-    <p>16 أداة جاهزة لمساعدتك في ثوانٍ</p>
+    <p>15 أداة جاهزة لمساعدتك في ثوانٍ</p>
     <a href="/#tools" class="btn btn-primary btn-lg">تصفح الأدوات</a>
   </div>
 </section>
 <?php
 $content = ob_get_clean();
+
+$extraHead = Seo::jsonLd([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'عن المنصة', 'item' => Seo::url('/about.php')],
+    ],
+]);
+
 require __DIR__ . '/../templates/layout.php';

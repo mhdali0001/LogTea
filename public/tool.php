@@ -3,6 +3,7 @@
 require __DIR__ . '/../src/bootstrap.php';
 
 use LogTea\Support\Icons;
+use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 use LogTea\ToolRegistry;
 
@@ -14,6 +15,7 @@ $tool = ToolRegistry::find($slug);
 if ($tool === null) {
     http_response_code(404);
     $pageTitle = 'الأداة غير موجودة | LogTea';
+    $robotsContent = 'noindex, follow';
     ob_start();
     ?>
     <section class="page-banner">
@@ -32,6 +34,7 @@ if ($tool === null) {
 $pageTitle = $tool['name_ar'] . ' | LogTea';
 $pageDescription = $tool['desc_ar'];
 $activePage = 'tools';
+$canonicalPath = '/tools/' . $slug;
 
 $related = array_filter(ToolRegistry::byCategory($tool['category']), static fn ($s) => $s !== $slug, ARRAY_FILTER_USE_KEY);
 $related = array_slice($related, 0, 5, true);
@@ -150,4 +153,33 @@ ob_start();
 </div>
 <?php
 $content = ob_get_clean();
+
+$toolSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'SoftwareApplication',
+    'name' => $tool['name_ar'],
+    'description' => $tool['desc_ar'],
+    'url' => Seo::url('/tools/' . $slug),
+    'applicationCategory' => 'UtilitiesApplication',
+    'operatingSystem' => 'Any',
+    'isAccessibleForFree' => true,
+    'offers' => [
+        '@type' => 'Offer',
+        'price' => '0',
+        'priceCurrency' => 'USD',
+    ],
+];
+
+$breadcrumbSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'الأدوات', 'item' => Seo::url('/#tools')],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => $tool['name_ar'], 'item' => Seo::url('/tools/' . $slug)],
+    ],
+];
+
+$extraHead = Seo::jsonLd($toolSchema) . Seo::jsonLd($breadcrumbSchema);
+
 require __DIR__ . '/../templates/layout.php';

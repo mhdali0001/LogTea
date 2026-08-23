@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
@@ -9,6 +10,7 @@ TempCleanup::run();
 $pageTitle = 'ادعم المشروع | LogTea';
 $pageDescription = 'LogTea مجاني بالكامل ولا يعتمد على اشتراكات. إن أعجبك المشروع يمكنك دعمه اختيارياً.';
 $activePage = 'support';
+$canonicalPath = '/support.php';
 
 // TODO(owner): replace these with your real donation links before launch.
 $links = [
@@ -43,4 +45,14 @@ ob_start();
 </section>
 <?php
 $content = ob_get_clean();
+
+$extraHead = Seo::jsonLd([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'ادعم المشروع', 'item' => Seo::url('/support.php')],
+    ],
+]);
+
 require __DIR__ . '/../templates/layout.php';

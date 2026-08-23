@@ -3,6 +3,7 @@
 require __DIR__ . '/../src/bootstrap.php';
 
 use LogTea\Support\Icons;
+use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 use LogTea\ToolRegistry;
 
@@ -11,6 +12,7 @@ TempCleanup::run();
 $pageTitle = 'LogTea | أدوات مجانية لملفات PDF والصور والمستندات';
 $pageDescription = 'ادمج، اضغط، حوّل وعدّل ملفات PDF والصور والمستندات مجاناً بالكامل — بدون تسجيل، معالجة سريعة وآمنة.';
 $activePage = 'home';
+$canonicalPath = '/';
 
 $tools = ToolRegistry::all();
 $categories = ['all' => 'الكل', 'pdf' => 'أدوات PDF', 'image' => 'أدوات الصور', 'convert' => 'تحويل الملفات'];
@@ -18,18 +20,43 @@ $categories = ['all' => 'الكل', 'pdf' => 'أدوات PDF', 'image' => 'أد�
 ob_start();
 ?>
 <section class="hero">
+  <div class="hero-bg"><div class="grid-lines"></div><div class="particles"></div></div>
   <div class="container hero-inner">
-    <div class="hero-badge"><span>✨</span> مجاني بالكامل — بدون تسجيل</div>
-    <h1 class="hero-title">كل أدوات <span class="text-teal">PDF والملفات</span><br/>في مكان واحد</h1>
-    <p class="hero-desc">ادمج، اضغط، حوّل، واحمِ ملفاتك في ثوانٍ. معالجة سريعة، وملفاتك تُحذف تلقائياً من خوادمنا خلال ساعة.</p>
-    <div class="hero-search">
-      <span style="color:var(--text-muted);">🔍</span>
-      <input type="text" id="toolSearch" placeholder="ابحث عن أداة… مثال: دمج، ضغط، Word" />
+    <div class="hero-content">
+      <div class="hero-badge"><span>✨</span> مجاني بالكامل — بدون تسجيل</div>
+      <h1 class="hero-title">كل أدوات <span class="text-teal">PDF والملفات</span><br/>في مكان واحد</h1>
+      <p class="hero-desc">ادمج، اضغط، حوّل، واحمِ ملفاتك في ثوانٍ. معالجة سريعة، وملفاتك تُحذف تلقائياً من خوادمنا خلال ساعة.</p>
+      <div class="hero-search">
+        <span style="color:var(--text-muted);">🔍</span>
+        <input type="text" id="toolSearch" placeholder="ابحث عن أداة… مثال: دمج، ضغط، Word" />
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num"><?= count($tools) ?></span><span class="stat-label">أداة مجانية</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">بدون تسجيل</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num">1h</span><span class="stat-label">حذف تلقائي</span></div>
+      </div>
     </div>
-    <div class="hero-trust">
-      <span>🔒 معالجة آمنة</span>
-      <span>🗑️ حذف تلقائي خلال ساعة</span>
-      <span>💯 بدون اشتراكات</span>
+    <div class="hero-visual">
+      <div class="hero-visual-glow"></div>
+      <div class="hub-card">
+        <div class="hub-card-header">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span class="hub-card-title">logtea.tools</span>
+        </div>
+        <div class="hub-stage">
+          <div class="hub-center"><?= Icons::svg('pdf') ?></div>
+          <div class="hub-orbit">
+            <span class="hub-chip hc-1"><?= Icons::svg('word') ?></span>
+            <span class="hub-chip hc-2"><?= Icons::svg('excel') ?></span>
+            <span class="hub-chip hc-3"><?= Icons::svg('image') ?></span>
+            <span class="hub-chip hc-4"><?= Icons::svg('ppt') ?></span>
+            <span class="hub-chip hc-5"><?= Icons::svg('merge') ?></span>
+          </div>
+        </div>
+        <div class="hub-footer"><span class="hub-dot"></span> جاهز للمعالجة الفورية — بدون خادم خارجي</div>
+      </div>
     </div>
   </div>
 </section>
@@ -103,4 +130,70 @@ ob_start();
 </section>
 <?php
 $content = ob_get_clean();
+
+$webAppSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'WebApplication',
+    'name' => 'LogTea',
+    'url' => Seo::url('/'),
+    'description' => $pageDescription,
+    'applicationCategory' => 'UtilitiesApplication',
+    'operatingSystem' => 'Any',
+    'inLanguage' => 'ar',
+    'isAccessibleForFree' => true,
+    'offers' => [
+        '@type' => 'Offer',
+        'price' => '0',
+        'priceCurrency' => 'USD',
+    ],
+];
+
+$toolListSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'ItemList',
+    'itemListElement' => [],
+];
+$position = 1;
+foreach ($tools as $slug => $tool) {
+    $toolListSchema['itemListElement'][] = [
+        '@type' => 'ListItem',
+        'position' => $position++,
+        'name' => $tool['name_ar'],
+        'url' => Seo::url('/tools/' . $slug),
+    ];
+}
+
+$faqSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => [
+        [
+            '@type' => 'Question',
+            'name' => 'هل المنصة مجانية فعلاً؟',
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => 'نعم، جميع الأدوات مجانية بالكامل وبدون أي اشتراكات أو حدود مخفية. إن أعجبتك المنصة يمكنك دعمها اختيارياً من صفحة الدعم.',
+            ],
+        ],
+        [
+            '@type' => 'Question',
+            'name' => 'هل ملفاتي آمنة؟',
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => 'نعم — لا نطلب تسجيل دخول، ولا نحتفظ بملفاتك؛ يتم حذفها تلقائياً من الخادم خلال ساعة من رفعها.',
+            ],
+        ],
+        [
+            '@type' => 'Question',
+            'name' => 'لماذا بعض الأدوات موسومة بـ"نطاق محدود"؟',
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => 'بعض العمليات (مثل تحويل PDF إلى صورة كاملة، أو إزالة تشفير AES الحديث) تتطلب برامج خادم إضافية لا تعمل بها المنصة حالياً. الأداة نفسها تعمل ضمن الحدود الموضحة في صفحتها.',
+            ],
+        ],
+    ],
+];
+
+$extraHead = Seo::jsonLd($webAppSchema) . Seo::jsonLd($toolListSchema) . Seo::jsonLd($faqSchema);
+
 require __DIR__ . '/../templates/layout.php';

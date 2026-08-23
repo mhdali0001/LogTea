@@ -3,6 +3,7 @@
 require __DIR__ . '/../src/bootstrap.php';
 
 use LogTea\Support\Icons;
+use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
@@ -10,6 +11,7 @@ TempCleanup::run();
 $pageTitle = 'تواصل معنا | LogTea';
 $pageDescription = 'لديك سؤال أو اقتراح حول أدوات LogTea؟ تواصل معنا مباشرة.';
 $activePage = 'contact';
+$canonicalPath = '/contact.php';
 
 // TODO(owner): replace with your real support email/social links before launch.
 $contactEmail = 'support@logtea.app';
@@ -55,4 +57,14 @@ ob_start();
 </section>
 <?php
 $content = ob_get_clean();
+
+$extraHead = Seo::jsonLd([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'تواصل معنا', 'item' => Seo::url('/contact.php')],
+    ],
+]);
+
 require __DIR__ . '/../templates/layout.php';

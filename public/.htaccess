@@ -3,6 +3,10 @@ RewriteEngine On
 # Pretty tool URLs: /tools/merge-pdf -> tool.php?slug=merge-pdf
 RewriteRule ^tools/([a-z0-9-]+)/?$ tool.php?slug=$1 [L,QSA]
 
+# SEO endpoints served dynamically so their URLs always match the current domain.
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^robots\.txt$ robots.php [L]
+
 # Best-effort upload limits (ignored if the host disallows per-directory overrides).
 <IfModule mod_php.c>
   php_value upload_max_filesize 50M
