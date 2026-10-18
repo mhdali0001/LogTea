@@ -2,6 +2,8 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\ProjectRegistry;
+use LogTea\ServiceRegistry;
 use LogTea\Support\Icons;
 use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
@@ -9,13 +11,18 @@ use LogTea\ToolRegistry;
 
 TempCleanup::run();
 
-$pageTitle = 'LogTea | أدوات مجانية لملفات PDF والصور والمستندات';
-$pageDescription = 'ادمج، اضغط، حوّل وعدّل ملفات PDF والصور والمستندات مجاناً بالكامل — بدون تسجيل، معالجة سريعة وآمنة.';
+$pageTitle = 'LogTea | نكتب الشيفرة .. نصنع الحلول';
+$pageDescription = 'LogTea شركة تصميم وتطوير مواقع ومتاجر إلكترونية وأنظمة إدارة — نحوّل فكرتك إلى حل رقمي متقن، ونقدّم أدوات ملفات PDF مجانية للجميع.';
 $activePage = 'home';
 $canonicalPath = '/';
 
+$services = ServiceRegistry::all();
+$projects = array_slice(ProjectRegistry::all(), 0, 6, true);
 $tools = ToolRegistry::all();
-$categories = ['all' => 'الكل', 'pdf' => 'أدوات PDF', 'image' => 'أدوات الصور', 'convert' => 'تحويل الملفات'];
+$showcaseTools = array_intersect_key($tools, array_flip([
+    'merge-pdf', 'compress-pdf', 'pdf-to-word', 'word-to-pdf',
+    'image-to-pdf', 'split-pdf', 'compress-image', 'excel-to-pdf',
+]));
 
 ob_start();
 ?>
@@ -23,177 +30,193 @@ ob_start();
   <div class="hero-bg"><div class="grid-lines"></div><div class="particles"></div></div>
   <div class="container hero-inner">
     <div class="hero-content">
-      <div class="hero-badge"><span>✨</span> مجاني بالكامل — بدون تسجيل</div>
-      <h1 class="hero-title">كل أدوات <span class="text-teal">PDF والملفات</span><br/>في مكان واحد</h1>
-      <p class="hero-desc">ادمج، اضغط، حوّل، واحمِ ملفاتك في ثوانٍ. معالجة سريعة، وملفاتك تُحذف تلقائياً من خوادمنا خلال ساعة.</p>
-      <div class="hero-search">
-        <span style="color:var(--text-muted);">🔍</span>
-        <input type="text" id="toolSearch" placeholder="ابحث عن أداة… مثال: دمج، ضغط، Word" />
+      <div class="hero-badge"><span class="badge-dot"></span> شركة تصميم وتطوير مواقع منذ 2019</div>
+      <h1 class="hero-title">نكتب <span class="text-teal">الشيفرة</span><br/>نصنع <span class="text-teal">الحلول</span></h1>
+      <p class="hero-desc">نصمم ونطوّر مواقع ومتاجر إلكترونية وأنظمة إدارة تعكس هوية علامتك وتنمو مع أعمالك — باستخدام أحدث التقنيات وأفضل الممارسات العالمية.</p>
+      <div class="hero-actions">
+        <a href="/contact.php" class="btn btn-primary btn-lg">ابدأ مشروعك ←</a>
+        <a href="/portfolio.php" class="btn btn-ghost btn-lg">شاهد أعمالنا</a>
       </div>
       <div class="hero-stats">
-        <div class="stat-item"><span class="stat-num"><?= count($tools) ?></span><span class="stat-label">أداة مجانية</span></div>
+        <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label">عميل سعيد</span></div>
         <div class="stat-divider"></div>
-        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">بدون تسجيل</span></div>
+        <div class="stat-item"><span class="stat-num">120+</span><span class="stat-label">مشروع مكتمل</span></div>
         <div class="stat-divider"></div>
-        <div class="stat-item"><span class="stat-num">1h</span><span class="stat-label">حذف تلقائي</span></div>
+        <div class="stat-item"><span class="stat-num">5+</span><span class="stat-label">سنوات خبرة</span></div>
       </div>
     </div>
     <div class="hero-visual">
       <div class="hero-visual-glow"></div>
-      <div class="hub-card">
-        <div class="hub-card-header">
+      <div class="tech-card">
+        <div class="card-header">
           <div class="dots"><span></span><span></span><span></span></div>
-          <span class="hub-card-title">logtea.tools</span>
+          <span class="card-title-bar">logtea_solution.py</span>
         </div>
-        <div class="hub-stage">
-          <div class="hub-center"><?= Icons::svg('pdf') ?></div>
-          <div class="hub-orbit">
-            <span class="hub-chip hc-1"><?= Icons::svg('word') ?></span>
-            <span class="hub-chip hc-2"><?= Icons::svg('excel') ?></span>
-            <span class="hub-chip hc-3"><?= Icons::svg('image') ?></span>
-            <span class="hub-chip hc-4"><?= Icons::svg('ppt') ?></span>
-            <span class="hub-chip hc-5"><?= Icons::svg('merge') ?></span>
-          </div>
+        <div class="code-block" dir="ltr">
+          <div class="code-line" style="--i:0"><span class="c-purple">class</span> <span class="c-teal">LogTea</span>:</div>
+          <div class="code-line indent" style="--i:1"><span class="c-blue">def</span> <span class="c-yellow">build</span>(self, idea):</div>
+          <div class="code-line indent2" style="--i:2"><span class="c-gray">"""نصمم .. نطوّر .. نطلق"""</span></div>
+          <div class="code-line indent2" style="--i:3"><span class="c-purple">return</span> {</div>
+          <div class="code-line indent3" style="--i:4"><span class="c-teal">"design"</span>: self.ui_ux(idea),</div>
+          <div class="code-line indent3" style="--i:5"><span class="c-teal">"web"</span>: self.develop(idea),</div>
+          <div class="code-line indent3" style="--i:6"><span class="c-teal">"store"</span>: self.ecommerce(idea),</div>
+          <div class="code-line indent3" style="--i:7"><span class="c-teal">"tools"</span>: self.free_tools(),</div>
+          <div class="code-line indent2" style="--i:8">}</div>
         </div>
-        <div class="hub-footer"><span class="hub-dot"></span> جاهز للمعالجة الفورية — بدون خادم خارجي</div>
+        <div class="terminal-line" dir="ltr"><span class="t-green">✓</span> Building your vision... <span class="cursor-blink">|</span></div>
       </div>
     </div>
   </div>
-</section>
-
-<section class="section" id="tools" style="padding-top:8px;">
-  <div class="container">
-    <div class="cat-tabs">
-      <?php foreach ($categories as $key => $label): ?>
-        <button type="button" class="cat-tab<?= $key === 'all' ? ' active' : '' ?>" data-cat="<?= $key ?>"><?= $label ?></button>
-      <?php endforeach; ?>
-    </div>
-    <div class="tool-grid">
-      <?php foreach ($tools as $slug => $tool): ?>
-        <a href="/tools/<?= htmlspecialchars($slug) ?>" class="tool-card" data-cat="<?= $tool['category'] ?>"
-           data-name="<?= htmlspecialchars(mb_strtolower($tool['name_ar'])) ?>"
-           data-desc="<?= htmlspecialchars(mb_strtolower($tool['desc_ar'])) ?>">
-          <div class="tool-icon"><?= Icons::svg($tool['icon']) ?></div>
-          <?php if (isset($tool['note_ar'])): ?><span class="tc-badge">نطاق محدود</span><?php endif; ?>
-          <h3><?= htmlspecialchars($tool['name_ar']) ?></h3>
-          <p><?= htmlspecialchars($tool['desc_ar']) ?></p>
+  <div class="services-bar">
+    <div class="container services-bar-inner">
+      <?php foreach ($services as $key => $service): ?>
+        <a href="<?= $service['url'] ?>" class="service-bar-item">
+          <?= Icons::svg($service['icon']) ?>
+          <div><strong><?= htmlspecialchars($service['name_en']) ?></strong><span><?= htmlspecialchars($service['name_ar']) ?></span></div>
         </a>
       <?php endforeach; ?>
-      <p class="tool-empty" style="display:none;">لا توجد أدوات مطابقة لبحثك.</p>
     </div>
   </div>
 </section>
 
 <section class="section section-dark">
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">كيف تعمل المنصة</div>
-      <h2 class="section-title">ثلاث خطوات <span class="text-teal">فقط</span></h2>
+    <div class="section-header" data-reveal>
+      <div class="section-tag">خدماتنا</div>
+      <h2 class="section-title">كل ما يحتاجه <span class="text-teal">حضورك الرقمي</span></h2>
+      <p class="section-desc">من التصميم إلى الإطلاق — ومعها أدوات مجانية تسهّل عملك اليومي</p>
     </div>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>ارفع ملفك</h3><p>اسحب الملف أو اخترته من جهازك — بدون تسجيل دخول.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>اختر الإعدادات</h3><p>حدد الخيارات المناسبة للأداة، إن وجدت.</p></div>
-      <div class="step"><div class="step-num">3</div><h3>نزّل النتيجة</h3><p>يتم تجهيز ملفك خلال ثوانٍ وتنزيله مباشرة.</p></div>
+    <div class="services-grid">
+      <?php foreach ($services as $key => $service): ?>
+        <div class="service-card<?= !empty($service['featured']) ? ' sc-featured' : '' ?><?= !empty($service['free']) ? ' sc-free' : '' ?>" data-reveal>
+          <?php if (!empty($service['featured'])): ?><div class="sc-badge">الأكثر طلباً</div><?php endif; ?>
+          <?php if (!empty($service['free'])): ?><div class="sc-badge sc-badge-free">مجاناً</div><?php endif; ?>
+          <div class="sc-icon sc-tone-<?= (int) $service['tone'] ?>"><?= Icons::svg($service['icon']) ?></div>
+          <h3><?= htmlspecialchars($service['name_en']) ?></h3>
+          <p class="sc-ar"><?= htmlspecialchars($service['name_ar']) ?></p>
+          <p class="sc-desc"><?= htmlspecialchars($service['summary']) ?></p>
+          <div class="sc-tags"><?php foreach ($service['tags'] as $tag): ?><span><?= htmlspecialchars($tag) ?></span><?php endforeach; ?></div>
+          <a href="<?= $service['url'] ?>" class="sc-link"><?= !empty($service['free']) ? 'جرّب الأدوات الآن ←' : 'اعرف أكثر ←' ?></a>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <div class="section-more" data-reveal>
+      <a href="/services.php" class="btn btn-ghost">عرض تفاصيل الخدمات →</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stats-item"><div class="stats-value"><span class="stats-num" data-count="50">50</span><span class="stats-plus">+</span></div><div class="stats-label">عميل سعيد</div></div>
+      <div class="stats-item"><div class="stats-value"><span class="stats-num" data-count="120">120</span><span class="stats-plus">+</span></div><div class="stats-label">مشروع مكتمل</div></div>
+      <div class="stats-item"><div class="stats-value"><span class="stats-num" data-count="5">5</span><span class="stats-plus">+</span></div><div class="stats-label">سنوات خبرة</div></div>
+      <div class="stats-item"><div class="stats-value"><span class="stats-num" data-count="<?= count($tools) ?>"><?= count($tools) ?></span></div><div class="stats-label">أداة ملفات مجانية</div></div>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">أسئلة شائعة</div>
-      <h2 class="section-title">كل ما تحتاج <span class="text-teal">معرفته</span></h2>
+    <div class="about-grid">
+      <div class="about-visual" data-reveal>
+        <div class="about-pattern"></div>
+        <div class="about-card-float">
+          <div class="acf-icon"><?= Icons::svg('bolt') ?></div>
+          <div><div class="acf-title">سرعة التنفيذ</div><div class="acf-sub">من الفكرة إلى الإطلاق</div></div>
+        </div>
+        <div class="about-logo-box">
+          <div class="alb-icon">LT</div>
+          <div class="alb-ring ring1"></div><div class="alb-ring ring2"></div><div class="alb-ring ring3"></div>
+          <div class="tech-dots">
+            <span class="td td1">Design</span><span class="td td2">Web</span>
+            <span class="td td3">Store</span><span class="td td4">Tools</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-content" data-reveal>
+        <div class="section-tag">من نحن</div>
+        <h2 class="section-title">نصنع <span class="text-teal">المستقبل الرقمي</span></h2>
+        <p class="section-desc">LogTea شركة تصميم وتطوير مواقع تجمع الإبداع التقني بالفهم العميق لاحتياجات عملائها. نؤمن بأن كل فكرة تستحق أن تتحول إلى موقع متقن يُحدث فرقاً حقيقياً في أعمالك.</p>
+        <div class="about-values">
+          <div class="value-item"><div class="value-icon"><?= Icons::svg('bulb') ?></div><div><strong>ابتكار</strong><span>أحدث التقنيات</span></div></div>
+          <div class="value-item"><div class="value-icon"><?= Icons::svg('check') ?></div><div><strong>جودة</strong><span>كود نظيف وموثوق</span></div></div>
+          <div class="value-item"><div class="value-icon"><?= Icons::svg('shield') ?></div><div><strong>أمان</strong><span>بياناتك في أمان</span></div></div>
+          <div class="value-item"><div class="value-icon"><?= Icons::svg('bolt') ?></div><div><strong>سرعة</strong><span>نلتزم بالمواعيد</span></div></div>
+        </div>
+        <a href="/about.php" class="btn btn-primary">تعرّف علينا أكثر</a>
+      </div>
     </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-question">هل المنصة مجانية فعلاً؟</button>
-        <div class="faq-answer"><div class="faq-answer-inner">نعم، جميع الأدوات مجانية بالكامل وبدون أي اشتراكات أو حدود مخفية. إن أعجبتك المنصة يمكنك دعمها اختيارياً من صفحة الدعم.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">هل ملفاتي آمنة؟</button>
-        <div class="faq-answer"><div class="faq-answer-inner">نعم — لا نطلب تسجيل دخول، ولا نحتفظ بملفاتك؛ يتم حذفها تلقائياً من الخادم خلال ساعة من رفعها.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">لماذا بعض الأدوات موسومة بـ"نطاق محدود"؟</button>
-        <div class="faq-answer"><div class="faq-answer-inner">بعض العمليات (مثل تحويل PDF إلى صورة كاملة، أو إزالة تشفير AES الحديث) تتطلب برامج خادم إضافية لا تعمل بها المنصة حالياً. الأداة نفسها تعمل ضمن الحدود الموضحة في صفحتها.</div></div>
-      </div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="section-tag">أعمالنا</div>
+      <h2 class="section-title">مشاريع <span class="text-teal">نفتخر بها</span></h2>
+      <p class="section-desc">نماذج من مواقع ومتاجر وأنظمة أطلقناها لعملائنا</p>
+    </div>
+    <div class="port-grid">
+      <?php foreach ($projects as $project): ?>
+        <?php require __DIR__ . '/../templates/partials/project-card.php'; ?>
+      <?php endforeach; ?>
+    </div>
+    <div class="section-more" data-reveal>
+      <a href="/portfolio.php" class="btn btn-primary">عرض جميع المشاريع →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="section-tag">خدمة مجانية من LogTea</div>
+      <h2 class="section-title">أدوات ملفات <span class="text-teal">مجانية</span> للجميع</h2>
+      <p class="section-desc">ادمج، اضغط، وحوّل ملفات PDF والصور والمستندات في ثوانٍ — بدون تسجيل، وتُحذف ملفاتك تلقائياً من خوادمنا.</p>
+    </div>
+    <div class="tool-grid">
+      <?php foreach ($showcaseTools as $slug => $tool): ?>
+        <?php require __DIR__ . '/../templates/partials/tool-card.php'; ?>
+      <?php endforeach; ?>
+    </div>
+    <div class="section-more" data-reveal>
+      <a href="/tools.php" class="btn btn-ghost">تصفح كل الأدوات (<?= count($tools) ?>) →</a>
     </div>
   </div>
 </section>
 
 <section class="cta-banner">
-  <div class="container">
-    <h2>أعجبتك المنصة؟ <span class="text-teal">ادعم استمرارها</span></h2>
-    <p>LogTea مشروع مجاني بالكامل يعمل بدعم من مستخدميه</p>
-    <a href="/support.php" class="btn btn-primary btn-lg">ادعم المشروع 💛</a>
+  <div class="container" data-reveal>
+    <h2>هل لديك فكرة مشروع؟ <span class="text-teal">لنبدأ معاً</span></h2>
+    <p>فريقنا مستعد للاستماع وتحويل رؤيتك إلى موقع متقن — الاستشارة الأولى مجانية</p>
+    <div class="cta-banner-btns">
+      <a href="/contact.php" class="btn btn-primary btn-lg">تواصل معنا الآن</a>
+      <a href="/services.php" class="btn btn-ghost btn-lg">استعرض الخدمات</a>
+    </div>
   </div>
 </section>
 <?php
 $content = ob_get_clean();
 
-$webAppSchema = [
+$serviceSchema = [
     '@context' => 'https://schema.org',
-    '@type' => 'WebApplication',
+    '@type' => 'ProfessionalService',
     'name' => 'LogTea',
     'url' => Seo::url('/'),
+    'image' => Seo::url('/assets/img/og-image.png'),
     'description' => $pageDescription,
-    'applicationCategory' => 'UtilitiesApplication',
-    'operatingSystem' => 'Any',
-    'inLanguage' => 'ar',
-    'isAccessibleForFree' => true,
-    'offers' => [
-        '@type' => 'Offer',
-        'price' => '0',
-        'priceCurrency' => 'USD',
+    'hasOfferCatalog' => [
+        '@type' => 'OfferCatalog',
+        'name' => 'خدمات LogTea',
+        'itemListElement' => array_values(array_map(static fn (array $s): array => [
+            '@type' => 'Offer',
+            'itemOffered' => ['@type' => 'Service', 'name' => $s['name_ar'], 'description' => $s['summary']],
+        ], $services)),
     ],
 ];
 
-$toolListSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'ItemList',
-    'itemListElement' => [],
-];
-$position = 1;
-foreach ($tools as $slug => $tool) {
-    $toolListSchema['itemListElement'][] = [
-        '@type' => 'ListItem',
-        'position' => $position++,
-        'name' => $tool['name_ar'],
-        'url' => Seo::url('/tools/' . $slug),
-    ];
-}
-
-$faqSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => [
-        [
-            '@type' => 'Question',
-            'name' => 'هل المنصة مجانية فعلاً؟',
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => 'نعم، جميع الأدوات مجانية بالكامل وبدون أي اشتراكات أو حدود مخفية. إن أعجبتك المنصة يمكنك دعمها اختيارياً من صفحة الدعم.',
-            ],
-        ],
-        [
-            '@type' => 'Question',
-            'name' => 'هل ملفاتي آمنة؟',
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => 'نعم — لا نطلب تسجيل دخول، ولا نحتفظ بملفاتك؛ يتم حذفها تلقائياً من الخادم خلال ساعة من رفعها.',
-            ],
-        ],
-        [
-            '@type' => 'Question',
-            'name' => 'لماذا بعض الأدوات موسومة بـ"نطاق محدود"؟',
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => 'بعض العمليات (مثل تحويل PDF إلى صورة كاملة، أو إزالة تشفير AES الحديث) تتطلب برامج خادم إضافية لا تعمل بها المنصة حالياً. الأداة نفسها تعمل ضمن الحدود الموضحة في صفحتها.',
-            ],
-        ],
-    ],
-];
-
-$extraHead = Seo::jsonLd($webAppSchema) . Seo::jsonLd($toolListSchema) . Seo::jsonLd($faqSchema);
+$extraHead = Seo::jsonLd($serviceSchema);
 
 require __DIR__ . '/../templates/layout.php';

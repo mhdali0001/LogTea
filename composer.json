@@ -1,6 +1,6 @@
 {
     "name": "logtea/tools",
-    "description": "LogTea - PDF, image and document tools platform",
+    "description": "LogTea - web design company website with free PDF, image and document tools",
     "type": "project",
     "license": "proprietary",
     "require": {

@@ -1,5 +1,5 @@
 // ============================================================
-// LogTea Tools — shared front-end behaviour
+// LogTea — shared front-end behaviour (company site + tools)
 // ============================================================
 
 function initNavScroll() {
@@ -110,6 +110,76 @@ function initToolSearch() {
       if (show) visible++;
     });
     if (empty) empty.style.display = visible ? 'none' : 'block';
+  });
+}
+
+// ============================================================
+// Company pages: scroll reveal, counters, portfolio filter
+// ============================================================
+
+function initReveal() {
+  const els = document.querySelectorAll('[data-reveal]');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('is-visible');
+      obs.unobserve(en.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach((el) => obs.observe(el));
+}
+
+function initCounters() {
+  const els = document.querySelectorAll('[data-count]');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      obs.unobserve(en.target);
+      const el = en.target;
+      const target = +el.getAttribute('data-count');
+      // The final number stays in the markup until the first frame, so the
+      // stat never sits at 0 if animation frames are throttled.
+      let start = null;
+      const tick = (now) => {
+        if (start === null) start = now;
+        const t = Math.min((now - start) / 1400, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+  els.forEach((el) => obs.observe(el));
+}
+
+function initPortfolioFilter() {
+  const btns = document.querySelectorAll('.pf-btn');
+  const cards = document.querySelectorAll('.port-card[data-category]');
+  if (!btns.length) return;
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      cards.forEach((card) => {
+        const cats = (card.getAttribute('data-category') || '').split(' ');
+        card.style.display = filter === 'all' || cats.includes(filter) ? '' : 'none';
+      });
+    });
+  });
+}
+
+function initTodayHours() {
+  const today = String(new Date().getDay());
+  document.querySelectorAll('.hours-item[data-days]').forEach((item) => {
+    if (item.getAttribute('data-days').split(',').includes(today)) item.classList.add('is-today');
   });
 }
 
@@ -310,6 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   initHeroParticles();
   initFAQ();
+  initReveal();
+  initCounters();
+  initPortfolioFilter();
+  initTodayHours();
   initCategoryTabs();
   initToolSearch();
   initToolPage();

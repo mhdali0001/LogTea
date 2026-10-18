@@ -44,7 +44,7 @@ final class ToolRegistry
                         ['value' => 'range', 'label_ar' => 'استخراج نطاق صفحات', 'label_en' => 'Extract a page range'],
                         ['value' => 'all', 'label_ar' => 'كل صفحة في ملف مستقل (ZIP)', 'label_en' => 'Every page as a separate file (ZIP)'],
                     ]],
-                    ['name' => 'range', 'type' => 'text', 'label_ar' => 'نطاق الصفحات (مثال: 1-3,5)', 'label_en' => 'Page range (e.g. 1-3,5)', 'default' => '', 'depends_on' => ['mode' => 'range']],
+                    ['name' => 'range', 'type' => 'text', 'label_ar' => "نطاق الصفحات (مثال: \u{2066}1-3,5\u{2069})", 'label_en' => 'Page range (e.g. 1-3,5)', 'default' => '', 'depends_on' => ['mode' => 'range']],
                 ],
                 'class' => Tools\SplitPdfTool::class,
             ],

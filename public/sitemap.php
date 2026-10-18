@@ -11,9 +11,11 @@ header('Content-Type: application/xml; charset=UTF-8');
 
 $staticPages = [
     ['path' => '/', 'priority' => '1.0'],
+    ['path' => '/services.php', 'priority' => '0.9'],
+    ['path' => '/portfolio.php', 'priority' => '0.8'],
+    ['path' => '/tools.php', 'priority' => '0.9'],
     ['path' => '/about.php', 'priority' => '0.6'],
-    ['path' => '/contact.php', 'priority' => '0.5'],
-    ['path' => '/support.php', 'priority' => '0.4'],
+    ['path' => '/contact.php', 'priority' => '0.6'],
 ];
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
