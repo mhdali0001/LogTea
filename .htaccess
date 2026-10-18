@@ -1,10 +1,20 @@
-# This project's web root is the `public/` folder — point your host's
-# document root there. This file is a safety net in case it is ever
-# misconfigured to serve the project root instead.
-<IfModule mod_authz_core.c>
-  Require all denied
+# This project's web root is the `public/` folder. Hosts like Hostinger serve
+# the project root (public_html) and don't let you point the document root at
+# `public/`, so every request is routed into it. Nothing outside `public/`
+# (vendor/, src/, storage/, .git, composer.*) is reachable: /vendor/x resolves
+# to public/vendor/x, which doesn't exist -> 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
-<IfModule !mod_authz_core.c>
-  Order deny,allow
-  Deny from all
+
+# Without mod_rewrite the routing above can't work, so fail closed.
+<IfModule !mod_rewrite.c>
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
 </IfModule>
