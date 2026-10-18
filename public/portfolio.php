@@ -2,16 +2,17 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\PageSeo;
 use LogTea\ProjectRegistry;
-use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
 
-$pageTitle = 'أعمالنا | LogTea';
-$pageDescription = 'نماذج من مشاريع LogTea: مواقع شركات، متاجر إلكترونية، أنظمة إدارة ومنصات SaaS صممناها وطورناها لعملائنا.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('portfolio');
 $activePage = 'portfolio';
 $canonicalPath = '/portfolio.php';
+$pageType = 'CollectionPage';
+$breadcrumbs = [['أعمالنا', '/portfolio.php']];
 
 $projects = ProjectRegistry::all();
 $spotlight = ProjectRegistry::featured();
@@ -22,7 +23,7 @@ ob_start();
   <div class="page-banner-grid"></div>
   <div class="container">
     <div class="breadcrumb"><a href="/">الرئيسية</a><span class="breadcrumb-sep">/</span><span>أعمالنا</span></div>
-    <h1>مشاريع <span class="text-teal">نفتخر بها</span></h1>
+    <h1>أعمالنا في برمجة وتصميم <span class="text-teal">المواقع</span></h1>
     <p>120+ مشروع ناجح عبر مختلف القطاعات — من المواقع التعريفية إلى المتاجر والأنظمة المتكاملة</p>
     <div class="banner-stat-row">
       <div class="banner-stat"><strong>120+</strong><span>مشروع مكتمل</span></div>
@@ -113,13 +114,6 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-$extraHead = Seo::jsonLd([
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'أعمالنا', 'item' => Seo::url('/portfolio.php')],
-    ],
-]);
+$schema = [ProjectRegistry::schema()];
 
 require __DIR__ . '/../templates/layout.php';

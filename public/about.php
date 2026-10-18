@@ -2,15 +2,16 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
-use LogTea\Support\Seo;
+use LogTea\PageSeo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
 
-$pageTitle = 'من نحن | LogTea';
-$pageDescription = 'LogTea شركة تصميم وتطوير مواقع تؤمن بأن كل فكرة تستحق أن تتحول إلى حل رقمي متقن. تعرّف على قصتنا ورسالتنا وقيمنا.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('about');
 $activePage = 'about';
 $canonicalPath = '/about.php';
+$pageType = 'AboutPage';
+$breadcrumbs = [['من نحن', '/about.php']];
 
 $values = [
     ['💡', 'الابتكار أولاً', 'نتبنى أحدث التقنيات ونجرب باستمرار. البقاء في المقدمة ليس خياراً بل ضرورة في عالم التكنولوجيا المتسارع.'],
@@ -35,7 +36,7 @@ ob_start();
   <div class="container">
     <div class="breadcrumb"><a href="/">الرئيسية</a><span class="breadcrumb-sep">/</span><span>من نحن</span></div>
     <h1>نكتب الشيفرة<br/><span class="text-teal">نصنع الحلول</span></h1>
-    <p>شركة تصميم وتطوير مواقع تؤمن بأن كل فكرة تستحق أن تتحول إلى واقع رقمي متقن يُحدث فرقاً حقيقياً في أعمال عملائها</p>
+    <p>شركة برمجة وتصميم مواقع مقرها دمشق، تؤمن بأن كل فكرة تستحق أن تتحول إلى واقع رقمي متقن يُحدث فرقاً حقيقياً في أعمال عملائها</p>
     <div class="banner-stat-row">
       <div class="banner-stat"><strong>50+</strong><span>عميل سعيد</span></div>
       <div class="banner-stat"><strong>120+</strong><span>مشروع مكتمل</span></div>
@@ -135,14 +136,5 @@ ob_start();
 </section>
 <?php
 $content = ob_get_clean();
-
-$extraHead = Seo::jsonLd([
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'من نحن', 'item' => Seo::url('/about.php')],
-    ],
-]);
 
 require __DIR__ . '/../templates/layout.php';

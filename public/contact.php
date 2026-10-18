@@ -2,38 +2,26 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\Company;
+use LogTea\PageSeo;
 use LogTea\Support\Icons;
-use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 
 TempCleanup::run();
 
-$pageTitle = 'تواصل معنا | LogTea';
-$pageDescription = 'تواصل مع فريق LogTea مباشرة عبر LinkedIn واحصل على استشارة أولى مجانية لموقعك أو متجرك أو نظامك.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('contact');
 $activePage = 'contact';
 $canonicalPath = '/contact.php';
+$pageType = 'ContactPage';
+$breadcrumbs = [['تواصل معنا', '/contact.php']];
 
-// The team is reached through LinkedIn. `role` is optional and shown under the name when set.
-$team = [
-    ['name' => 'Omayir Alghannam', 'role' => '', 'url' => 'https://www.linkedin.com/in/omayir-alghannam/'],
-    ['name' => 'Ibrahim Sabban', 'role' => '', 'url' => 'https://www.linkedin.com/in/ibrahim-sabban-9b6a5a1b4/'],
-    ['name' => 'Mhd Ali', 'role' => '', 'url' => 'https://www.linkedin.com/in/mhdali000/'],
-];
-
-$offices = [
-    ['badge' => 'المقر الرئيسي', 'city' => 'دمشق', 'address' => 'المالكي، سوريا', 'note' => 'نعمل مع عملاء المنطقة العربية والعالم', 'hq' => true],
-    ['badge' => 'مكتب تركيا', 'city' => 'إسطنبول', 'address' => 'الفاتح، تركيا', 'note' => 'نخدم عملاء تركيا وأوروبا', 'hq' => false],
-    ['badge' => 'مكتب عُمان', 'city' => 'بركاء', 'address' => 'سلطنة عُمان', 'note' => 'نخدم عملاء الخليج العربي', 'hq' => false],
-];
-
-// First column matches JS Date#getDay() (0 = Sunday … 6 = Saturday) so today's row can be highlighted.
-$hours = [
-    ['0,1,2,3,4', 'الأحد — الخميس', '9:00 ص — 10:00 م'],
-    ['5', 'الجمعة', '2:00 م — 8:00 م'],
-    ['6', 'السبت', '10:00 ص — 6:00 م'],
-];
+// Team, offices and hours also feed the site-wide organization schema, so they live in Company.
+$team = Company::team();
+$offices = Company::offices();
+$hours = Company::hours();
 
 $faqs = [
+    ['هل يمكنني طلب برمجة موقع وأنا خارج دمشق؟', 'نعم، نعمل عن بُعد مع العملاء في كل المدن السورية وخارج سوريا، ونتابع معك كل مرحلة عبر اجتماعات أونلاين حتى إطلاق موقعك.'],
     ['ما هي مدة الرد على رسالتي؟', 'نرد على رسائل LinkedIn خلال 24 ساعة عمل، ونتفق معك على موعد استشارة أونلاين مجانية.'],
     ['هل الاستشارة الأولى مجانية حقاً؟', 'نعم، الاستشارة الأولى مجانية تماماً وبدون أي التزام. خلالها نفهم احتياجاتك ونقدم رأينا الصريح، حتى لو لم تكمل المشروع معنا.'],
     ['كيف يتم حماية سرية مشروعي؟', 'نوقّع اتفاقية عدم إفصاح (NDA) مع العميل عند الحاجة قبل البدء في أي نقاش تقني. سرية مشروعك جزء من التزامنا.'],
@@ -47,7 +35,7 @@ ob_start();
   <div class="container">
     <div class="breadcrumb"><a href="/">الرئيسية</a><span class="breadcrumb-sep">/</span><span>تواصل معنا</span></div>
     <h1>لنبدأ <span class="text-teal">معاً</span></h1>
-    <p>هل لديك فكرة موقع أو مشروع؟ تواصل مع فريقنا مباشرة عبر LinkedIn — استشارتك الأولى مجانية تماماً</p>
+    <p>هل تبحث عن برمجة موقع في سوريا؟ تواصل مع فريقنا مباشرة عبر LinkedIn — استشارتك الأولى مجانية تماماً</p>
     <div class="banner-stat-row">
       <div class="banner-stat"><strong>&lt;24h</strong><span>وقت الرد</span></div>
       <div class="banner-stat"><strong>مجانية</strong><span>الاستشارة الأولى</span></div>
@@ -113,10 +101,10 @@ ob_start();
         </div>
       </div>
       <div class="hours-list">
-        <?php foreach ($hours as [$days, $label, $time]): ?>
-          <div class="hours-item" data-days="<?= $days ?>">
-            <span class="hours-day"><?= htmlspecialchars($label) ?><span class="hours-today">اليوم</span></span>
-            <strong class="hours-time"><?= htmlspecialchars($time) ?></strong>
+        <?php foreach ($hours as $slot): ?>
+          <div class="hours-item" data-days="<?= implode(',', $slot['days']) ?>">
+            <span class="hours-day"><?= htmlspecialchars($slot['label']) ?><span class="hours-today">اليوم</span></span>
+            <strong class="hours-time"><?= htmlspecialchars($slot['time']) ?></strong>
           </div>
         <?php endforeach; ?>
       </div>
@@ -143,31 +131,5 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-$contactSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'ContactPage',
-    'url' => Seo::url('/contact.php'),
-    'about' => [
-        '@type' => 'Organization',
-        'name' => 'LogTea',
-        'url' => Seo::url('/'),
-        'member' => array_map(static fn (array $m): array => [
-            '@type' => 'Person',
-            'name' => $m['name'],
-            'sameAs' => $m['url'],
-        ], $team),
-    ],
-];
-
-$breadcrumbSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'تواصل معنا', 'item' => Seo::url('/contact.php')],
-    ],
-];
-
-$extraHead = Seo::jsonLd($contactSchema) . Seo::jsonLd($breadcrumbSchema);
-
+// The team, offices and hours are published through the site-wide organization node (Company::schema()).
 require __DIR__ . '/../templates/layout.php';

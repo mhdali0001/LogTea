@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LogTea;
 
+use LogTea\Support\Seo;
+
 /**
  * Single source of truth for the company's services: drives the homepage
  * service cards, the detailed services page, the footer links and the
@@ -137,6 +139,33 @@ final class ServiceRegistry
                 'url'      => '/tools.php',
             ],
 
+        ];
+    }
+
+    /** schema.org list of the services, each linked to the site-wide organization node. */
+    public static function schema(): array
+    {
+        $services = array_values(self::all());
+
+        return [
+            '@type' => 'ItemList',
+            '@id' => Seo::url('/services.php#services'),
+            'name' => 'خدمات LogTea لبرمجة وتصميم المواقع',
+            'itemListElement' => array_map(static fn (int $i, array $s): array => [
+                '@type' => 'ListItem',
+                'position' => $i + 1,
+                'item' => array_filter([
+                    '@type' => 'Service',
+                    'name' => $s['name_ar'],
+                    'alternateName' => $s['name_en'],
+                    'description' => $s['desc'],
+                    'url' => Seo::url($s['url']),
+                    'provider' => ['@id' => Seo::url('/#organization')],
+                    // The free tools are online for everyone; the paid services are sold in Syria and the region.
+                    'areaServed' => empty($s['free']) ? ['@type' => 'Country', 'name' => 'سوريا'] : null,
+                    'isAccessibleForFree' => empty($s['free']) ? null : true,
+                ]),
+            ], array_keys($services), $services),
         ];
     }
 }

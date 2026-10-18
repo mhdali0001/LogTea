@@ -2,17 +2,16 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\PageSeo;
 use LogTea\ProjectRegistry;
 use LogTea\ServiceRegistry;
 use LogTea\Support\Icons;
-use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 use LogTea\ToolRegistry;
 
 TempCleanup::run();
 
-$pageTitle = 'LogTea | نكتب الشيفرة .. نصنع الحلول';
-$pageDescription = 'LogTea شركة تصميم وتطوير مواقع ومتاجر إلكترونية وأنظمة إدارة — نحوّل فكرتك إلى حل رقمي متقن، ونقدّم أدوات ملفات PDF مجانية للجميع.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('home');
 $activePage = 'home';
 $canonicalPath = '/';
 
@@ -30,9 +29,9 @@ ob_start();
   <div class="hero-bg"><div class="grid-lines"></div><div class="particles"></div></div>
   <div class="container hero-inner">
     <div class="hero-content">
-      <div class="hero-badge"><span class="badge-dot"></span> شركة تصميم وتطوير مواقع منذ 2019</div>
+      <div class="hero-badge"><span class="badge-dot"></span> شركة برمجة وتصميم مواقع في سوريا منذ 2019</div>
       <h1 class="hero-title">نكتب <span class="text-teal">الشيفرة</span><br/>نصنع <span class="text-teal">الحلول</span></h1>
-      <p class="hero-desc">نصمم ونطوّر مواقع ومتاجر إلكترونية وأنظمة إدارة تعكس هوية علامتك وتنمو مع أعمالك — باستخدام أحدث التقنيات وأفضل الممارسات العالمية.</p>
+      <p class="hero-desc">نبرمج ونصمم مواقع ومتاجر إلكترونية وأنظمة إدارة تعكس هوية علامتك وتنمو مع أعمالك — من دمشق لعملائنا في سوريا والمنطقة العربية، بأحدث التقنيات وأفضل الممارسات.</p>
       <div class="hero-actions">
         <a href="/contact.php" class="btn btn-primary btn-lg">ابدأ مشروعك ←</a>
         <a href="/portfolio.php" class="btn btn-ghost btn-lg">شاهد أعمالنا</a>
@@ -75,6 +74,50 @@ ob_start();
           <div><strong><?= htmlspecialchars($service['name_en']) ?></strong><span><?= htmlspecialchars($service['name_ar']) ?></span></div>
         </a>
       <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="syria">
+  <div class="container">
+    <div class="syria-grid">
+      <div data-reveal>
+        <div class="section-tag">برمجة مواقع في سوريا</div>
+        <h2 class="section-title">هل تبحث عن <span class="text-teal">برمجة موقع في سوريا؟</span></h2>
+        <p class="syria-lead">LogTea شركة برمجة وتصميم مواقع مقرها دمشق. نبرمج مواقع الشركات والمتاجر الإلكترونية وأنظمة الإدارة، ونخدم العملاء في كل المدن السورية — من دمشق إلى حلب وحمص واللاذقية — ونرافقك في كل مرحلة من الفكرة حتى الإطلاق.</p>
+        <ul class="syria-points">
+          <li><?= Icons::svg('check') ?>مقرنا في دمشق — نفهم السوق السوري ونتحدث لغتك</li>
+          <li><?= Icons::svg('check') ?>مواقع عربية متجاوبة مع الجوال وسريعة التحميل</li>
+          <li><?= Icons::svg('check') ?>تحسين الظهور في Google (SEO) من اليوم الأول</li>
+          <li><?= Icons::svg('check') ?>استضافة ونشر ودعم فني بعد الإطلاق</li>
+        </ul>
+        <div class="btn-row">
+          <a href="/contact.php" class="btn btn-primary">احصل على استشارة مجانية</a>
+          <a href="/portfolio.php" class="btn btn-ghost">شاهد أعمالنا</a>
+        </div>
+      </div>
+      <div class="syria-card" data-reveal>
+        <div class="syria-card-head">
+          <span class="office-icon"><?= Icons::svg('pin') ?></span>
+          <div>
+            <span class="syria-card-label">مقرنا الرئيسي</span>
+            <strong>دمشق — المالكي، سوريا</strong>
+          </div>
+        </div>
+        <h3 class="syria-card-title">ماذا نبرمج لك؟</h3>
+        <div class="syria-services">
+          <a href="/services.php#web-development"><?= Icons::svg('code') ?>مواقع الشركات</a>
+          <a href="/services.php#ecommerce"><?= Icons::svg('cart') ?>المتاجر الإلكترونية</a>
+          <a href="/services.php#systems"><?= Icons::svg('dashboard') ?>أنظمة الإدارة</a>
+          <a href="/services.php#web-design"><?= Icons::svg('design') ?>تصميم UI/UX</a>
+        </div>
+        <h3 class="syria-card-title">نخدم العملاء في</h3>
+        <div class="syria-cities">
+          <?php foreach (['دمشق', 'حلب', 'حمص', 'اللاذقية', 'حماة', 'طرطوس', 'وكل المحافظات'] as $city): ?>
+            <span><?= $city ?></span>
+          <?php endforeach; ?>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -200,23 +243,6 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-$serviceSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'ProfessionalService',
-    'name' => 'LogTea',
-    'url' => Seo::url('/'),
-    'image' => Seo::url('/assets/img/og-image.png'),
-    'description' => $pageDescription,
-    'hasOfferCatalog' => [
-        '@type' => 'OfferCatalog',
-        'name' => 'خدمات LogTea',
-        'itemListElement' => array_values(array_map(static fn (array $s): array => [
-            '@type' => 'Offer',
-            'itemOffered' => ['@type' => 'Service', 'name' => $s['name_ar'], 'description' => $s['summary']],
-        ], $services)),
-    ],
-];
-
-$extraHead = Seo::jsonLd($serviceSchema);
+$schema = [ServiceRegistry::schema()];
 
 require __DIR__ . '/../templates/layout.php';

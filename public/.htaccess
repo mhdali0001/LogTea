@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Branded "page not found" page (still answers with a real 404 status).
+ErrorDocument 404 /404.php
+
 # Pretty tool URLs: /tools/merge-pdf -> tool.php?slug=merge-pdf
 RewriteRule ^tools/([a-z0-9-]+)/?$ tool.php?slug=$1 [L,QSA]
 

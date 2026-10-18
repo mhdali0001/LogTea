@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 /**
  * Builds the 1200×630 social-preview card (Open Graph / Twitter) for every
- * tool into public/assets/img/og/tools/{slug}.jpg — tool.php picks it up
- * automatically and falls back to the site-wide card when it is missing.
+ * tool into public/assets/img/og/tools/{slug}.jpg and for every company page
+ * (PageSeo) into public/assets/img/og/pages/{page}.jpg — the pages pick them
+ * up automatically and fall back to the site-wide card when one is missing.
  *
  * Rendering goes through headless Chrome because GD cannot shape Arabic text.
- * Run it again whenever a tool is added or renamed:
+ * Run it again whenever a tool or a page card changes:
  *
  *   php scripts/og-images.php ["C:\path\to\chrome.exe"]
  *
@@ -17,6 +18,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\PageSeo;
 use LogTea\Support\Icons;
 use LogTea\ToolRegistry;
 
@@ -42,9 +44,23 @@ if ($chrome === null || !is_file($chrome)) {
     exit(1);
 }
 
-$outDir = LOGTEA_ROOT . '/public/assets/img/og/tools';
+// One job per image: [output folder under og/, file name, card text].
+$jobs = [];
+foreach (ToolRegistry::all() as $slug => $tool) {
+    $jobs[] = ['tools', $slug, [
+        'title' => $tool['name_ar'],
+        'subtitle' => $tool['name_en'],
+        'icon' => $tool['icon'],
+        'tags' => ['مجاناً', 'بدون تسجيل', 'حذف تلقائي للملفات'],
+    ]];
+}
+foreach (PageSeo::cards() as $page => $card) {
+    $jobs[] = ['pages', $page, $card];
+}
+
+$ogDir = LOGTEA_ROOT . '/public/assets/img/og';
 $workDir = sys_get_temp_dir() . '/logtea-og';
-foreach ([$outDir, $workDir] as $dir) {
+foreach ([$ogDir . '/tools', $ogDir . '/pages', $workDir] as $dir) {
     if (!is_dir($dir) && !mkdir($dir, 0775, true)) {
         fwrite(STDERR, "Cannot create {$dir}\n");
         exit(1);
@@ -54,10 +70,11 @@ foreach ([$outDir, $workDir] as $dir) {
 $logo = trimmedLogoDataUri(LOGTEA_ROOT . '/public/assets/img/logo.png');
 
 $failed = 0;
-foreach (ToolRegistry::all() as $slug => $tool) {
+foreach ($jobs as [$folder, $name, $card]) {
+    $slug = $folder . '-' . $name;
     $htmlPath = $workDir . '/' . $slug . '.html';
     $pngPath = $workDir . '/' . $slug . '.png';
-    file_put_contents($htmlPath, cardHtml($tool, $logo));
+    file_put_contents($htmlPath, cardHtml($card, $logo));
     @unlink($pngPath);
 
     $command = implode(' ', [
@@ -80,8 +97,8 @@ foreach (ToolRegistry::all() as $slug => $tool) {
         $failed++;
         continue;
     }
-    imagejpeg($image, $outDir . '/' . $slug . '.jpg', 86);
-    echo "OK    {$slug}\n";
+    imagejpeg($image, "{$ogDir}/{$folder}/{$name}.jpg", 86);
+    echo "OK    {$folder}/{$name}\n";
 }
 
 exit($failed > 0 ? 1 : 0);
@@ -102,12 +119,16 @@ function trimmedLogoDataUri(string $path): string
     return 'data:image/png;base64,' . base64_encode((string) ob_get_clean());
 }
 
-/** @param array<string,mixed> $tool */
-function cardHtml(array $tool, string $logo): string
+/** @param array{title:string,subtitle:string,icon:string,tags:list<string>} $card */
+function cardHtml(array $card, string $logo): string
 {
-    $name = htmlspecialchars($tool['name_ar'], ENT_QUOTES, 'UTF-8');
-    $nameEn = htmlspecialchars($tool['name_en'], ENT_QUOTES, 'UTF-8');
-    $icon = Icons::svg($tool['icon']);
+    $name = htmlspecialchars($card['title'], ENT_QUOTES, 'UTF-8');
+    $nameEn = htmlspecialchars($card['subtitle'], ENT_QUOTES, 'UTF-8');
+    $icon = Icons::svg($card['icon']);
+    $tags = implode('', array_map(
+        static fn (string $tag): string => '<span>' . htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') . '</span>',
+        $card['tags']
+    ));
 
     return <<<HTML
 <!doctype html>
@@ -153,7 +174,7 @@ function cardHtml(array $tool, string $logo): string
       <img class="logo" src="{$logo}" alt="">
       <h1>{$name}</h1>
       <div class="en">{$nameEn}</div>
-      <div class="tags"><span>مجاناً</span><span>بدون تسجيل</span><span>حذف تلقائي للملفات</span></div>
+      <div class="tags">{$tags}</div>
     </div>
     <div class="icon">{$icon}</div>
   </div>

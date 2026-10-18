@@ -2,16 +2,19 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\PageSeo;
 use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 use LogTea\ToolRegistry;
+use LogTea\ToolSeo;
 
 TempCleanup::run();
 
-$pageTitle = 'أدوات ملفات مجانية | LogTea';
-$pageDescription = 'ادمج، اضغط، حوّل وعدّل ملفات PDF والصور والمستندات مجاناً — خدمة مجانية من LogTea بدون تسجيل، معالجة سريعة وآمنة.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('tools');
 $activePage = 'tools';
 $canonicalPath = '/tools.php';
+$pageType = 'CollectionPage';
+$breadcrumbs = [['الأدوات المجانية', '/tools.php']];
 
 $tools = ToolRegistry::all();
 $categories = ['all' => 'الكل', 'pdf' => 'أدوات PDF', 'image' => 'أدوات الصور', 'convert' => 'تحويل الملفات'];
@@ -104,58 +107,34 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-$webAppSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'WebApplication',
-    'name' => 'LogTea Tools',
-    'url' => Seo::url('/tools.php'),
-    'description' => $pageDescription,
-    'applicationCategory' => 'UtilitiesApplication',
-    'operatingSystem' => 'Any',
-    'inLanguage' => 'ar',
-    'isAccessibleForFree' => true,
-    'provider' => ['@type' => 'Organization', 'name' => 'LogTea', 'url' => Seo::url('/')],
-    'offers' => [
-        '@type' => 'Offer',
-        'price' => '0',
-        'priceCurrency' => 'USD',
-    ],
-];
-
-$toolListSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'ItemList',
-    'itemListElement' => [],
-];
-$position = 1;
+// Each entry points at the WebApplication node of the tool's own page (same @id).
+$toolItems = [];
 foreach ($tools as $slug => $tool) {
-    $toolListSchema['itemListElement'][] = [
+    $toolUrl = Seo::url('/tools/' . $slug);
+    $toolImage = '/assets/img/og/tools/' . $slug . '.jpg';
+    $toolItems[] = [
         '@type' => 'ListItem',
-        'position' => $position++,
-        'name' => $tool['name_ar'],
-        'url' => Seo::url('/tools/' . $slug),
+        'position' => count($toolItems) + 1,
+        'item' => array_filter([
+            '@type' => 'WebApplication',
+            '@id' => $toolUrl . '#app',
+            'name' => $tool['name_ar'],
+            'alternateName' => $tool['name_en'],
+            'url' => $toolUrl,
+            'description' => ToolSeo::for($slug, $tool)['description'],
+            'image' => is_file(__DIR__ . $toolImage) ? Seo::url($toolImage) : null,
+            'applicationCategory' => 'UtilitiesApplication',
+            'operatingSystem' => 'Any',
+            'isAccessibleForFree' => true,
+        ]),
     ];
 }
-
-$faqSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(static fn (array $f): array => [
-        '@type' => 'Question',
-        'name' => $f[0],
-        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
-    ], $faqs),
-];
-
-$breadcrumbSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'الأدوات المجانية', 'item' => Seo::url('/tools.php')],
-    ],
-];
-
-$extraHead = Seo::jsonLd($webAppSchema) . Seo::jsonLd($toolListSchema) . Seo::jsonLd($faqSchema) . Seo::jsonLd($breadcrumbSchema);
+$schema = [[
+    '@type' => 'ItemList',
+    '@id' => Seo::url('/tools.php#tools'),
+    'name' => 'أدوات LogTea المجانية',
+    'numberOfItems' => count($toolItems),
+    'itemListElement' => $toolItems,
+]];
 
 require __DIR__ . '/../templates/layout.php';

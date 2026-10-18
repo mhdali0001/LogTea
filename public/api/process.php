@@ -12,7 +12,7 @@ TempCleanup::run();
 
 header('Content-Type: application/json; charset=utf-8');
 
-function respondError(string $message, int $status = 400): never
+function respondError(string $message, int $status = 400): void
 {
     http_response_code($status);
     echo json_encode(['ok' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);

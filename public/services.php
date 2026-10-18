@@ -2,26 +2,27 @@
 
 require __DIR__ . '/../src/bootstrap.php';
 
+use LogTea\PageSeo;
 use LogTea\ServiceRegistry;
 use LogTea\Support\Icons;
-use LogTea\Support\Seo;
 use LogTea\Support\TempCleanup;
 use LogTea\ToolRegistry;
 
 TempCleanup::run();
 
-$pageTitle = 'الخدمات | LogTea';
-$pageDescription = 'خدمات LogTea: تصميم المواقع، تطوير المواقع والتطبيقات، المتاجر الإلكترونية، أنظمة الإدارة، حلول الذكاء الاصطناعي، وأدوات ملفات مجانية.';
+['title' => $pageTitle, 'description' => $pageDescription, 'keywords' => $metaKeywords, 'image' => $ogImage] = PageSeo::for('services');
 $activePage = 'services';
 $canonicalPath = '/services.php';
+$breadcrumbs = [['الخدمات', '/services.php']];
 
 $services = ServiceRegistry::all();
 $toolCount = count(ToolRegistry::all());
 
 $faqs = [
-    ['كم يستغرق تصميم وتطوير موقع احترافي؟', 'يعتمد الوقت على حجم المشروع. موقع تعريفي بسيط يستغرق 2-3 أسابيع، بينما المتاجر والمنصات المعقدة قد تحتاج 2-6 أشهر. نضع جدولاً زمنياً تفصيلياً في بداية كل مشروع ونلتزم به.'],
+    ['هل تبرمجون مواقع لعملاء داخل سوريا؟', 'نعم، مقرنا الرئيسي في دمشق — المالكي، ونخدم العملاء في كل المدن السورية، إلى جانب عملائنا في تركيا والخليج العربي.'],
+    ['كم تكلفة برمجة موقع في سوريا؟', 'تختلف التكلفة حسب نوع الموقع وحجمه — موقع تعريفي أو متجر إلكتروني أو نظام إدارة. نحدد السعر بعد استشارة مجانية نفهم فيها متطلباتك، ونقدم سعراً ثابتاً للمشاريع محددة المتطلبات أو سعراً بالساعة للمشاريع المرنة والمستمرة.'],
+    ['كم يستغرق تصميم وبرمجة موقع احترافي؟', 'يعتمد الوقت على حجم المشروع. موقع تعريفي بسيط يستغرق من 2 إلى 3 أسابيع، بينما المتاجر والمنصات المعقدة قد تحتاج من 2 إلى 6 أشهر. نضع جدولاً زمنياً تفصيلياً في بداية كل مشروع ونلتزم به.'],
     ['هل تقدمون ضماناً بعد التسليم؟', 'نعم، نقدم ضمان صيانة لمدة 3 أشهر مجاناً بعد الإطلاق لإصلاح أي مشاكل قد تظهر، إلى جانب خطط دعم مستمر شهرية وسنوية.'],
-    ['كيف يتم تسعير المشاريع؟', 'نقدم نظامين للتسعير: سعر ثابت للمشاريع محددة المتطلبات، أو سعر بالساعة للمشاريع المرنة والمستمرة. يبدأ التسعير بعد فهم متطلباتك الكاملة وتحديد نطاق العمل.'],
     ['هل يمكنني إدارة محتوى موقعي بنفسي؟', 'بالتأكيد. نسلّمك لوحة تحكم سهلة لتعديل النصوص والصور والمنتجات، مع شرح عملي لطريقة استخدامها.'],
     ['هل أدوات الملفات المجانية جزء من خدماتكم المدفوعة؟', 'لا — أدوات الملفات متاحة مجاناً للجميع بدون تسجيل. وإن احتجت أداة أو نظاماً مخصصاً لشركتك يمكننا بناؤه لك كمشروع مستقل.'],
 ];
@@ -32,8 +33,8 @@ ob_start();
   <div class="page-banner-grid"></div>
   <div class="container">
     <div class="breadcrumb"><a href="/">الرئيسية</a><span class="breadcrumb-sep">/</span><span>الخدمات</span></div>
-    <h1>حلول رقمية <span class="text-teal">متكاملة</span></h1>
-    <p>من تصميم الواجهة إلى إطلاق الموقع ودعمه — نقدم كل ما يحتاجه حضورك الرقمي، ومعها أدوات ملفات مجانية للجميع</p>
+    <h1>خدمات برمجة وتصميم <span class="text-teal">المواقع</span></h1>
+    <p>من تصميم الواجهة إلى إطلاق الموقع ودعمه — نقدم لعملائنا في سوريا والمنطقة العربية كل ما يحتاجه حضورك الرقمي، ومعها أدوات ملفات مجانية للجميع</p>
     <div class="page-banner-actions">
       <a href="/contact.php" class="btn btn-primary">احصل على استشارة مجانية</a>
       <a href="#services-list" class="btn btn-ghost">استعرض الخدمات</a>
@@ -114,25 +115,7 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-$faqSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(static fn (array $f): array => [
-        '@type' => 'Question',
-        'name' => $f[0],
-        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
-    ], $faqs),
-];
-
-$breadcrumbSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'الرئيسية', 'item' => Seo::url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'الخدمات', 'item' => Seo::url('/services.php')],
-    ],
-];
-
-$extraHead = Seo::jsonLd($faqSchema) . Seo::jsonLd($breadcrumbSchema);
+// The layout publishes $faqs and $breadcrumbs as structured data.
+$schema = [ServiceRegistry::schema()];
 
 require __DIR__ . '/../templates/layout.php';

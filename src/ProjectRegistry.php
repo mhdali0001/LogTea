@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LogTea;
 
+use LogTea\Support\Seo;
+
 /**
  * Portfolio projects shown on the homepage preview and the portfolio page.
  * `categories` keys must match the filter buttons in portfolio.php.
@@ -119,6 +121,31 @@ final class ProjectRegistry
                 'tags'       => ['Python', 'TensorFlow', 'OpenCV'],
             ],
 
+        ];
+    }
+
+    /** schema.org list of the portfolio projects, each credited to the site-wide organization node. */
+    public static function schema(): array
+    {
+        $projects = array_values(self::all());
+
+        return [
+            '@type' => 'ItemList',
+            '@id' => Seo::url('/portfolio.php#projects'),
+            'name' => 'أعمال LogTea في برمجة وتصميم المواقع',
+            'itemListElement' => array_map(static fn (int $i, array $p): array => [
+                '@type' => 'ListItem',
+                'position' => $i + 1,
+                'item' => array_filter([
+                    '@type' => 'CreativeWork',
+                    'name' => $p['title'],
+                    'description' => $p['desc'],
+                    'image' => $p['image'] ? Seo::url($p['image']) : null,
+                    'genre' => $p['label'],
+                    'keywords' => implode(', ', $p['tags']),
+                    'creator' => ['@id' => Seo::url('/#organization')],
+                ]),
+            ], array_keys($projects), $projects),
         ];
     }
 

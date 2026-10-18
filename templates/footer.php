@@ -16,7 +16,7 @@ $footerTools = array_intersect_key(
         <a href="/" class="logo" style="margin-bottom:16px;">
           <span class="logo-badge"><img src="/assets/img/logo.png" alt="LogTea" class="nav-logo-img" /></span>
         </a>
-        <p>LogTea شركة تصميم وتطوير مواقع تحوّل أفكارك إلى مواقع ومتاجر وأنظمة رقمية متقنة — ونقدّم إلى جانب ذلك أدوات ملفات مجانية للجميع.</p>
+        <p>LogTea شركة برمجة وتصميم مواقع في سوريا، مقرها دمشق، تحوّل أفكارك إلى مواقع ومتاجر وأنظمة رقمية متقنة — ونقدّم إلى جانب ذلك أدوات ملفات مجانية للجميع.</p>
         <div class="footer-trust">
           <span>✓ استشارة أولى مجانية</span>
           <span>✓ دعم فني بعد الإطلاق</span>

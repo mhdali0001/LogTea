@@ -14,7 +14,7 @@
 
 ## المتطلبات
 
-- PHP 8.1+ مع امتدادات: `gd`, `zip`, `mbstring`, `dom`, `xml`
+- PHP 8.0+ مع امتدادات: `gd`, `zip`, `mbstring`, `dom`, `xml`
 - Composer
 
 ## التشغيل محلياً
@@ -35,12 +35,13 @@ php -S localhost:8000 -t public
   location /tools/ {
       rewrite ^/tools/([a-z0-9-]+)/?$ /tool.php?slug=$1 last;
   }
+  error_page 404 /404.php;
   ```
 - تأكد من رفع حدود `upload_max_filesize` و `post_max_size` في `php.ini` (القيمة الافتراضية المستخدمة هنا 50-55MB).
 
 ## قبل الإطلاق
 
-- **`public/contact.php`**: التواصل يتم عبر بروفايلات LinkedIn لفريق العمل (المصفوفة `$team`). يمكنك إضافة المسمى الوظيفي لكل عضو في الحقل `role` ليظهر تحت الاسم.
+- **فريق العمل والمكاتب وساعات العمل** في `src/Company.php`: تظهر في صفحة التواصل وفي البيانات المنظمة لكل الصفحات. يمكنك إضافة المسمى الوظيفي لكل عضو في الحقل `role` ليظهر تحت الاسم.
 - **الأرقام والإحصاءات** (50+ عميل، 120+ مشروع، نتائج المشاريع...) منقولة من نسخة الموقع السابقة — راجعها قبل الإطلاق في `public/index.php` و `about.php` و `portfolio.php` و `src/ProjectRegistry.php`.
 - **`public/support.php`** (صفحة التبرع القديمة): لم تعد مرتبطة من القائمة أو خريطة الموقع — احذفها أو أعد ربطها حسب رغبتك.
 
@@ -52,11 +53,22 @@ php -S localhost:8000 -t public
 - `src/ProjectRegistry.php` — مشاريع معرض الأعمال (الرئيسية وصفحة أعمالنا)
 - `src/Tools/` — كلاس معالجة لكل أداة (15 أداة)
 - `src/ToolRegistry.php` — تعريف كل أداة (الاسم، الأيقونة، الامتدادات المقبولة، الخيارات)
+- `src/PageSeo.php` — بيانات SEO لصفحات الشركة (الرئيسية، الخدمات، أعمالنا، من نحن، الأدوات، تواصل معنا): العنوان، الوصف، الكلمات المفتاحية (مركّزة على «برمجة وتصميم مواقع في سوريا»)، ونص صورة المشاركة
 - `src/ToolSeo.php` — بيانات SEO لكل أداة: عنوان الصفحة، الوصف، الكلمات المفتاحية، خطوات الاستخدام، المميزات، والأسئلة الشائعة (تظهر في الصفحة وفي البيانات المنظمة Schema.org)
-- `public/assets/img/og/tools/` — صورة مشاركة (1200×630) لكل أداة تظهر عند مشاركة رابطها على واتساب وتويتر ولينكدإن. تُولَّد بالأمر `php scripts/og-images.php` (يحتاج Google Chrome لأنه يرسم النص العربي بشكل صحيح)
+- `src/Company.php` — بيانات الشركة (الفريق، المكاتب، ساعات العمل) ومنها تُبنى بيانات المنظمة Schema.org في كل صفحة
+- `templates/layout.php` — كل وسوم الـ meta وOpen Graph وTwitter والأيقونات، وبيانات Schema.org بشكل مترابط (@graph): المنظمة، الموقع، الصفحة، مسار التنقل، والأسئلة الشائعة
+- `public/assets/img/og/` — صورة مشاركة (1200×630) لكل صفحة (`pages/`) ولكل أداة (`tools/`) تظهر عند مشاركة الرابط على واتساب وتويتر ولينكدإن. تُولَّد بالأمر `php scripts/og-images.php` (يحتاج Google Chrome لأنه يرسم النص العربي بشكل صحيح)
+- `public/favicon.ico` و `public/assets/img/icons/` — أيقونة الموقع، تُولَّد من شعار LogTea بالأمر `php scripts/favicon.php`
+- `public/404.php` — صفحة «الصفحة غير موجودة» (مفعّلة عبر `ErrorDocument` في `public/.htaccess`)
 - `src/Support/` — رفع/تنزيل آمن، تنظيف الملفات المؤقتة، أيقونات SVG
 - `templates/` — الهيدر والفوتر وقالب الصفحة المشترك، و `templates/partials/` لبطاقات المشاريع والأدوات
 - `storage/` — ملفات مؤقتة فقط (خارج web root، تُحذف تلقائياً)
+
+## بعد الإطلاق (SEO)
+
+1. أضف الموقع إلى [Google Search Console](https://search.google.com/search-console) وأرسل خريطة الموقع `https://نطاقك/sitemap.xml`.
+2. أنشئ ملف نشاط تجاري على [Google Business Profile](https://business.google.com) بعنوان المقر في دمشق — هذا أهم عامل للظهور في البحث المحلي مثل «برمجة موقع في سوريا».
+3. افحص البيانات المنظمة بأداة [Rich Results Test](https://search.google.com/test/rich-results)، ومعاينة المشاركة بأداة [Sharing Debugger](https://developers.facebook.com/tools/debug/).
 
 ## إضافة أداة جديدة
 

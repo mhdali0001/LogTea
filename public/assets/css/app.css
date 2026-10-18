@@ -244,7 +244,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
   border: 1px solid var(--border); padding: 6px 18px; border-radius: 100px;
   font-size: 13px; font-weight: 700; margin-bottom: 14px;
 }
-.section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 800; margin-bottom: 12px; }
+.section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 800; margin-bottom: 12px; text-wrap: balance; }
 .section-desc { color: var(--text-secondary); font-size: 16px; }
 .section-dark { position: relative; background: rgba(0,0,0,.18); overflow: hidden; }
 .section-dark::before {
@@ -312,6 +312,37 @@ input, select, textarea { font-family: inherit; color: inherit; }
 .stats-num { font-size: 50px; }
 .stats-plus { font-size: 32px; }
 .stats-label { margin-top: 8px; font-size: 15px; color: var(--text-secondary); }
+
+/* ===== "برمجة مواقع في سوريا" (home, local SEO) ===== */
+.syria-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+.syria-lead { margin-bottom: 22px; font-size: 16.5px; line-height: 1.9; color: var(--text-secondary); }
+.syria-points { display: grid; gap: 12px; margin-bottom: 30px; }
+.syria-points li { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.syria-points svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--teal); }
+.syria-card {
+  position: relative; overflow: hidden; padding: 28px; border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgba(0,194,184,.12), var(--card-bg) 55%); border: 1px solid rgba(0,194,184,.35);
+}
+.syria-card-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px dashed rgba(0,194,184,.25);
+}
+.syria-card-label { display: block; font-size: 12.5px; color: var(--text-muted); }
+.syria-card-head strong { font-size: 18px; color: #fff; }
+.syria-card-title { margin-bottom: 12px; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
+.syria-services { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+.syria-services a {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 700; color: var(--text-primary);
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); transition: var(--transition);
+}
+.syria-services a:hover { border-color: var(--teal); color: var(--teal); }
+.syria-services svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--teal); }
+.syria-cities { display: flex; flex-wrap: wrap; gap: 8px; }
+.syria-cities span {
+  padding: 5px 13px; border-radius: 100px; font-size: 13px; font-weight: 600;
+  color: var(--text-secondary); background: rgba(0,194,184,.08); border: 1px solid var(--border);
+}
 
 /* ===== ABOUT PREVIEW ===== */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
@@ -643,6 +674,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
 .banner-stat strong { display: block; font-family: var(--font-en); font-size: 32px; font-weight: 800; line-height: 1.1; color: var(--teal); direction: ltr; unicode-bidi: isolate; }
 .banner-stat span { display: block; margin-top: 4px; font-size: 13px; color: var(--text-secondary); }
 .banner-search { margin: 28px auto 0; }
+.error-code { display: block; margin-bottom: 6px; font-family: var(--font-en); font-size: clamp(72px, 14vw, 128px); font-weight: 800; line-height: 1; color: rgba(0,194,184,.28); }
 
 /* ===== TOOL PAGE ===== */
 .tool-layout { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 32px; align-items: start; padding: 8px 0 80px; }
@@ -779,6 +811,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
   .hero-visual { width: 100%; max-width: 460px; margin: 0 auto; }
   .services-grid, .port-grid, .values-grid { grid-template-columns: repeat(2, 1fr); }
   .about-grid, .story-grid { grid-template-columns: 1fr; gap: 48px; }
+  .syria-grid { grid-template-columns: 1fr; gap: 40px; }
   .hours-card { grid-template-columns: 1fr; gap: 18px; }
   .hours-item:first-child { border-inline-start: none; padding-inline-start: 0; }
   .about-visual { max-width: 460px; width: 100%; margin: 0 auto; }
@@ -824,6 +857,8 @@ input, select, textarea { font-family: inherit; color: inherit; }
   .container { padding: 0 16px; }
   .tool-grid { grid-template-columns: 1fr; }
   .tool-features { grid-template-columns: 1fr; }
+  .syria-services { grid-template-columns: 1fr; }
+  .syria-card { padding: 22px 18px; }
   .hero { padding-top: 120px; }
   .hero-actions .btn { flex: 1; justify-content: center; }
   .hero-stats { gap: 16px; }
