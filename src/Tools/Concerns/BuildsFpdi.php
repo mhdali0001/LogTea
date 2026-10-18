@@ -10,7 +10,15 @@ trait BuildsFpdi
 {
     private function newFpdi(): Fpdi
     {
-        $pdf = new Fpdi();
+        // TCPDF's constructor forces a hidden "Powered by TCPDF" link onto the
+        // last page; users get their document back with nothing of ours added.
+        $pdf = new class () extends Fpdi {
+            public function __construct()
+            {
+                parent::__construct();
+                $this->tcpdflink = false;
+            }
+        };
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->SetMargins(0, 0, 0);

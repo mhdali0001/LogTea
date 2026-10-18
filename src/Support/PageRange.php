@@ -51,4 +51,36 @@ final class PageRange
 
         return $pages;
     }
+
+    /**
+     * Like parse(), but keeps pages in the order typed, repeats included: "3,1-2"
+     * means 3, 1, 2 and a descending range like "5-3" runs backwards.
+     *
+     * @return int[]
+     */
+    public static function sequence(string $range, int $total): array
+    {
+        $pages = [];
+        foreach (explode(',', $range) as $part) {
+            $part = trim($part);
+            if ($part === '') {
+                continue;
+            }
+            if (str_contains($part, '-')) {
+                [$start, $end] = array_map(static fn (string $n): int => max(1, min($total, (int) trim($n))), explode('-', $part, 2));
+                array_push($pages, ...range($start, $end));
+            } else {
+                $p = (int) $part;
+                if ($p >= 1 && $p <= $total) {
+                    $pages[] = $p;
+                }
+            }
+        }
+
+        if ($pages === []) {
+            throw new RuntimeException('ترتيب الصفحات المُدخل غير صالح.');
+        }
+
+        return $pages;
+    }
 }

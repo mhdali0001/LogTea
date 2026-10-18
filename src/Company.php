@@ -12,13 +12,19 @@ use LogTea\Support\Seo;
  */
 final class Company
 {
-    /** @return list<array{name:string,role:string,url:string}> `role` is optional and shown under the name when set. */
+    /**
+     * `role` is optional and shown under the name when set. `photo` is optional:
+     * a path under public/ (e.g. /assets/img/team/mhdali000.jpg) — the initials
+     * show until it's set. Keep photos local: LinkedIn's image links expire.
+     *
+     * @return list<array{name:string,role:string,url:string,photo:string}>
+     */
     public static function team(): array
     {
         return [
-            ['name' => 'Omayir Alghannam', 'role' => '', 'url' => 'https://www.linkedin.com/in/omayir-alghannam/'],
-            ['name' => 'Ibrahim Sabban', 'role' => '', 'url' => 'https://www.linkedin.com/in/ibrahim-sabban-9b6a5a1b4/'],
-            ['name' => 'Mhd Ali', 'role' => '', 'url' => 'https://www.linkedin.com/in/mhdali000/'],
+            ['name' => 'Omayir Alghannam', 'role' => '', 'url' => 'https://www.linkedin.com/in/omayir-alghannam/', 'photo' => ''],
+            ['name' => 'Ibrahim Sabban', 'role' => '', 'url' => 'https://www.linkedin.com/in/ibrahim-sabban-9b6a5a1b4/', 'photo' => ''],
+            ['name' => 'Mhd Ali', 'role' => '', 'url' => 'https://www.linkedin.com/in/mhdali000/', 'photo' => ''],
         ];
     }
 
@@ -93,11 +99,12 @@ final class Company
                 'opens' => $h['opens'],
                 'closes' => $h['closes'],
             ], self::hours()),
-            'member' => array_map(static fn (array $m): array => [
+            'member' => array_map(static fn (array $m): array => array_filter([
                 '@type' => 'Person',
                 'name' => $m['name'],
+                'image' => $m['photo'] !== '' ? Seo::url($m['photo']) : null,
                 'sameAs' => $m['url'],
-            ], self::team()),
+            ]), self::team()),
         ];
     }
 }

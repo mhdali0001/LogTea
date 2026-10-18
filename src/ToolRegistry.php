@@ -119,6 +119,60 @@ final class ToolRegistry
                 'class' => Tools\CompressPdfTool::class,
             ],
 
+            'watermark-pdf' => [
+                'category'  => 'pdf',
+                'icon'      => 'watermark',
+                'name_ar'   => 'إضافة علامة مائية إلى PDF',
+                'name_en'   => 'Watermark PDF',
+                'desc_ar'   => 'اطبع نصاً شفافاً مثل «سري» أو اسم شركتك على كل صفحات الملف',
+                'desc_en'   => 'Stamp a transparent text such as "Confidential" or your company name on every page',
+                'accept'    => ['pdf'],
+                'multiple'  => false,
+                'options'   => [
+                    ['name' => 'text', 'type' => 'text', 'label_ar' => 'نص العلامة المائية', 'label_en' => 'Watermark text', 'default' => ''],
+                    ['name' => 'layout', 'type' => 'select', 'label_ar' => 'اتجاه النص', 'label_en' => 'Text direction', 'default' => 'diagonal', 'choices' => [
+                        ['value' => 'diagonal', 'label_ar' => 'مائل عبر الصفحة', 'label_en' => 'Diagonal across the page'],
+                        ['value' => 'horizontal', 'label_ar' => 'أفقي في المنتصف', 'label_en' => 'Horizontal, centered'],
+                    ]],
+                    ['name' => 'opacity', 'type' => 'range', 'label_ar' => 'درجة وضوح العلامة', 'label_en' => 'Watermark opacity', 'min' => 5, 'max' => 100, 'default' => 25],
+                ],
+                'class' => Tools\WatermarkPdfTool::class,
+            ],
+
+            'remove-pdf-pages' => [
+                'category'  => 'pdf',
+                'icon'      => 'trash',
+                'name_ar'   => 'حذف صفحات من PDF',
+                'name_en'   => 'Remove PDF Pages',
+                'desc_ar'   => 'احذف الصفحات غير المرغوبة من ملف PDF واحتفظ بالباقي',
+                'desc_en'   => 'Delete unwanted pages from a PDF and keep the rest',
+                'accept'    => ['pdf'],
+                'multiple'  => false,
+                'options'   => [
+                    ['name' => 'pages', 'type' => 'text', 'label_ar' => "الصفحات المراد حذفها (مثال: \u{2066}2,5-7\u{2069})", 'label_en' => 'Pages to remove (e.g. 2,5-7)', 'default' => ''],
+                ],
+                'class' => Tools\RemovePagesTool::class,
+            ],
+
+            'organize-pdf' => [
+                'category'  => 'pdf',
+                'icon'      => 'reorder',
+                'name_ar'   => 'ترتيب صفحات PDF',
+                'name_en'   => 'Organize PDF',
+                'desc_ar'   => 'أعد ترتيب صفحات الملف كما تريد أو اعكس ترتيبها بالكامل',
+                'desc_en'   => 'Put the pages in any order you want, or reverse them all',
+                'accept'    => ['pdf'],
+                'multiple'  => false,
+                'options'   => [
+                    ['name' => 'mode', 'type' => 'select', 'label_ar' => 'طريقة الترتيب', 'label_en' => 'Ordering', 'default' => 'custom', 'choices' => [
+                        ['value' => 'custom', 'label_ar' => 'ترتيب مخصص', 'label_en' => 'Custom order'],
+                        ['value' => 'reverse', 'label_ar' => 'عكس ترتيب كل الصفحات', 'label_en' => 'Reverse all pages'],
+                    ]],
+                    ['name' => 'order', 'type' => 'text', 'label_ar' => "الترتيب الجديد (مثال: \u{2066}3,1,2,4-6\u{2069})", 'label_en' => 'New order (e.g. 3,1,2,4-6)', 'default' => '', 'depends_on' => ['mode' => 'custom']],
+                ],
+                'class' => Tools\OrganizePdfTool::class,
+            ],
+
             'pdf-to-word' => [
                 'category'  => 'convert',
                 'icon'      => 'word',
@@ -179,6 +233,19 @@ final class ToolRegistry
                 'class' => Tools\PdfToImageTool::class,
             ],
 
+            'pdf-to-text' => [
+                'category'  => 'convert',
+                'icon'      => 'text',
+                'name_ar'   => 'استخراج النص من PDF',
+                'name_en'   => 'PDF to Text',
+                'desc_ar'   => 'انسخ كل نصوص ملف PDF إلى ملف نصي TXT جاهز للتعديل',
+                'desc_en'   => 'Pull all the text out of a PDF into an editable TXT file',
+                'accept'    => ['pdf'],
+                'multiple'  => false,
+                'options'   => [],
+                'class' => Tools\PdfToTextTool::class,
+            ],
+
             'compress-image' => [
                 'category'  => 'image',
                 'icon'      => 'compress',
@@ -192,6 +259,109 @@ final class ToolRegistry
                     ['name' => 'quality', 'type' => 'range', 'label_ar' => 'مستوى الجودة', 'label_en' => 'Quality level', 'min' => 30, 'max' => 95, 'default' => 75],
                 ],
                 'class' => Tools\CompressImageTool::class,
+            ],
+
+            'resize-image' => [
+                'category'  => 'image',
+                'icon'      => 'resize',
+                'name_ar'   => 'تغيير حجم الصور',
+                'name_en'   => 'Resize Images',
+                'desc_ar'   => 'غيّر أبعاد صورك بالبكسل أو بنسبة مئوية مع الحفاظ على تناسبها',
+                'desc_en'   => 'Change image dimensions in pixels or by percentage, keeping the proportions',
+                'accept'    => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'],
+                'multiple'  => true,
+                'options'   => [
+                    ['name' => 'mode', 'type' => 'select', 'label_ar' => 'طريقة التغيير', 'label_en' => 'Resize by', 'default' => 'percent', 'choices' => [
+                        ['value' => 'percent', 'label_ar' => 'نسبة مئوية', 'label_en' => 'Percentage'],
+                        ['value' => 'size', 'label_ar' => 'أبعاد بالبكسل', 'label_en' => 'Pixel dimensions'],
+                    ]],
+                    ['name' => 'percent', 'type' => 'number', 'label_ar' => 'النسبة المئوية من الحجم الأصلي', 'label_en' => 'Percentage of the original size', 'default' => '50', 'depends_on' => ['mode' => 'percent']],
+                    ['name' => 'width', 'type' => 'number', 'label_ar' => 'العرض (بكسل)', 'label_en' => 'Width (px)', 'default' => '', 'depends_on' => ['mode' => 'size']],
+                    ['name' => 'height', 'type' => 'number', 'label_ar' => 'الارتفاع (بكسل) — اختياري', 'label_en' => 'Height (px) — optional', 'default' => '', 'depends_on' => ['mode' => 'size']],
+                ],
+                'class' => Tools\ResizeImageTool::class,
+            ],
+
+            'convert-image' => [
+                'category'  => 'image',
+                'icon'      => 'convert',
+                'name_ar'   => 'تحويل صيغة الصور',
+                'name_en'   => 'Convert Images',
+                'desc_ar'   => 'حوّل صورك بين JPG وPNG وWebP، ومن GIF وBMP',
+                'desc_en'   => 'Convert images between JPG, PNG and WebP, and from GIF and BMP',
+                'accept'    => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'],
+                'multiple'  => true,
+                'options'   => [
+                    ['name' => 'format', 'type' => 'select', 'label_ar' => 'الصيغة المطلوبة', 'label_en' => 'Target format', 'default' => 'jpg', 'choices' => [
+                        ['value' => 'jpg', 'label_ar' => 'JPG', 'label_en' => 'JPG'],
+                        ['value' => 'png', 'label_ar' => 'PNG', 'label_en' => 'PNG'],
+                        ['value' => 'webp', 'label_ar' => 'WebP', 'label_en' => 'WebP'],
+                    ]],
+                ],
+                'class' => Tools\ConvertImageTool::class,
+            ],
+
+            'crop-image' => [
+                'category'  => 'image',
+                'icon'      => 'crop',
+                'name_ar'   => 'قص الصور',
+                'name_en'   => 'Crop Images',
+                'desc_ar'   => 'قص صورك بمقاسات جاهزة لإنستغرام والستوري ويوتيوب',
+                'desc_en'   => 'Crop images to ready-made ratios for Instagram, stories and YouTube',
+                'accept'    => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'],
+                'multiple'  => true,
+                'options'   => [
+                    ['name' => 'ratio', 'type' => 'select', 'label_ar' => 'نسبة القص', 'label_en' => 'Aspect ratio', 'default' => '1:1', 'choices' => [
+                        ['value' => '1:1', 'label_ar' => '1:1 — مربع (منشور إنستغرام، صورة شخصية)', 'label_en' => '1:1 — Square'],
+                        ['value' => '4:5', 'label_ar' => '4:5 — منشور إنستغرام عمودي', 'label_en' => '4:5 — Instagram portrait'],
+                        ['value' => '9:16', 'label_ar' => '9:16 — ستوري وريلز وتيك توك', 'label_en' => '9:16 — Stories & Reels'],
+                        ['value' => '16:9', 'label_ar' => '16:9 — يوتيوب والشاشات العريضة', 'label_en' => '16:9 — YouTube & widescreen'],
+                        ['value' => '4:3', 'label_ar' => '4:3 — أفقي كلاسيكي', 'label_en' => '4:3 — Classic landscape'],
+                        ['value' => '3:4', 'label_ar' => '3:4 — عمودي كلاسيكي', 'label_en' => '3:4 — Classic portrait'],
+                        ['value' => '3:2', 'label_ar' => '3:2 — صور الكاميرا الأفقية', 'label_en' => '3:2 — Camera landscape'],
+                        ['value' => '2:3', 'label_ar' => '2:3 — صور الكاميرا العمودية', 'label_en' => '2:3 — Camera portrait'],
+                    ]],
+                ],
+                'class' => Tools\CropImageTool::class,
+            ],
+
+            'rotate-image' => [
+                'category'  => 'image',
+                'icon'      => 'rotate',
+                'name_ar'   => 'تدوير الصور وقلبها',
+                'name_en'   => 'Rotate & Flip Images',
+                'desc_ar'   => 'دوّر صورك 90° أو 180° أو اقلبها أفقياً وعمودياً',
+                'desc_en'   => 'Rotate images by 90° or 180°, or flip them horizontally and vertically',
+                'accept'    => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'],
+                'multiple'  => true,
+                'options'   => [
+                    ['name' => 'action', 'type' => 'select', 'label_ar' => 'العملية', 'label_en' => 'Action', 'default' => 'right', 'choices' => [
+                        ['value' => 'right', 'label_ar' => 'تدوير 90° يمين', 'label_en' => 'Rotate 90° clockwise'],
+                        ['value' => 'left', 'label_ar' => 'تدوير 90° يسار', 'label_en' => 'Rotate 90° counter-clockwise'],
+                        ['value' => '180', 'label_ar' => 'تدوير 180°', 'label_en' => 'Rotate 180°'],
+                        ['value' => 'flip-h', 'label_ar' => 'قلب أفقي (مرآة)', 'label_en' => 'Flip horizontally (mirror)'],
+                        ['value' => 'flip-v', 'label_ar' => 'قلب عمودي', 'label_en' => 'Flip vertically'],
+                    ]],
+                ],
+                'class' => Tools\RotateImageTool::class,
+            ],
+
+            'favicon-generator' => [
+                'category'  => 'image',
+                'icon'      => 'browser',
+                'name_ar'   => 'صانع أيقونة الموقع Favicon',
+                'name_en'   => 'Favicon Generator',
+                'desc_ar'   => 'حوّل شعارك إلى أيقونة موقع favicon.ico بكل المقاسات المطلوبة',
+                'desc_en'   => 'Turn your logo into a favicon.ico and every icon size browsers need',
+                'accept'    => ['jpg', 'jpeg', 'png', 'webp'],
+                'multiple'  => false,
+                'options'   => [
+                    ['name' => 'fit', 'type' => 'select', 'label_ar' => 'ملاءمة الصورة للمربع', 'label_en' => 'Fit to square', 'default' => 'contain', 'choices' => [
+                        ['value' => 'contain', 'label_ar' => 'الصورة كاملة مع خلفية شفافة', 'label_en' => 'Whole image on a transparent background'],
+                        ['value' => 'cover', 'label_ar' => 'قص المنتصف ليملأ المربع', 'label_en' => 'Crop the center to fill the square'],
+                    ]],
+                ],
+                'class' => Tools\FaviconTool::class,
             ],
 
             'image-to-pdf' => [
@@ -253,6 +423,38 @@ final class ToolRegistry
                 'note_en'   => 'Basic conversion that preserves text and images, without a pixel-exact match of the original slide design.',
                 'options'   => [],
                 'class' => Tools\PptToPdfTool::class,
+            ],
+
+            'csv-to-excel' => [
+                'category'  => 'convert',
+                'icon'      => 'csv',
+                'name_ar'   => 'تحويل CSV إلى Excel',
+                'name_en'   => 'CSV to Excel',
+                'desc_ar'   => 'حوّل ملفات CSV إلى جدول Excel منسّق يدعم العربية',
+                'desc_en'   => 'Turn CSV files into a tidy Excel spreadsheet with full Arabic support',
+                'accept'    => ['csv'],
+                'multiple'  => false,
+                'options'   => [],
+                'class' => Tools\CsvToExcelTool::class,
+            ],
+
+            'excel-to-csv' => [
+                'category'  => 'convert',
+                'icon'      => 'csv',
+                'name_ar'   => 'تحويل Excel إلى CSV',
+                'name_en'   => 'Excel to CSV',
+                'desc_ar'   => 'صدّر أوراق Excel إلى ملفات CSV جاهزة للاستيراد في أي نظام',
+                'desc_en'   => 'Export Excel sheets to CSV files ready to import into any system',
+                'accept'    => ['xlsx', 'xls'],
+                'multiple'  => false,
+                'options'   => [
+                    ['name' => 'delimiter', 'type' => 'select', 'label_ar' => 'الفاصل بين الأعمدة', 'label_en' => 'Column separator', 'default' => 'comma', 'choices' => [
+                        ['value' => 'comma', 'label_ar' => 'فاصلة ( , )', 'label_en' => 'Comma ( , )'],
+                        ['value' => 'semicolon', 'label_ar' => 'فاصلة منقوطة ( ; )', 'label_en' => 'Semicolon ( ; )'],
+                        ['value' => 'tab', 'label_ar' => 'مسافة جدولة (Tab)', 'label_en' => 'Tab'],
+                    ]],
+                ],
+                'class' => Tools\ExcelToCsvTool::class,
             ],
 
         ];

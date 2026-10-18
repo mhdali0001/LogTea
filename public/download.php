@@ -13,6 +13,8 @@ $mimeByExt = [
     'jpg'  => 'image/jpeg',
     'png'  => 'image/png',
     'webp' => 'image/webp',
+    'txt'  => 'text/plain; charset=utf-8',
+    'csv'  => 'text/csv; charset=utf-8',
 ];
 
 $token = $_GET['token'] ?? '';

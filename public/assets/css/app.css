@@ -557,6 +557,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
   background: linear-gradient(135deg, var(--teal), var(--blue));
   box-shadow: 0 0 0 5px rgba(0,194,184,.14), 0 12px 30px rgba(0,194,184,.25);
 }
+.team-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .team-name { font-family: var(--font-en); font-size: 19px; font-weight: 700; color: #fff; }
 .team-role { font-size: 14px; font-weight: 700; color: var(--teal); margin-top: 2px; }
 .team-handle {

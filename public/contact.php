@@ -58,7 +58,13 @@ ob_start();
           $handle = 'linkedin.com' . rtrim((string) parse_url($member['url'], PHP_URL_PATH), '/');
         ?>
         <article class="team-card" data-reveal>
-          <div class="team-avatar" aria-hidden="true"><?= htmlspecialchars($initials) ?></div>
+          <div class="team-avatar" aria-hidden="true">
+            <?php if ($member['photo'] !== ''): ?>
+              <img src="<?= htmlspecialchars($member['photo']) ?>" alt="" width="88" height="88" loading="lazy">
+            <?php else: ?>
+              <?= htmlspecialchars($initials) ?>
+            <?php endif; ?>
+          </div>
           <h3 class="team-name" dir="ltr"><?= htmlspecialchars($member['name']) ?></h3>
           <?php if ($member['role'] !== ''): ?><p class="team-role"><?= htmlspecialchars($member['role']) ?></p><?php endif; ?>
           <span class="team-handle" dir="ltr"><?= htmlspecialchars($handle) ?></span>
